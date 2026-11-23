@@ -15,74 +15,53 @@
 <body data-page="home">
 <a class="skip-link" href="#main-content" data-i18n="skip_to_content">মূল বিষয়বস্তুতে যান</a>
 
-<div class="topbar">
-  <div class="container topbar-inner">
-    <p class="topbar-clock">
-      <svg class="icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.6 4.2 2.5-.8 1.3L11 13.5V7h2z"/></svg>
-      <span data-i18n="dhaka_time">ঢাকার সময়</span>: <span id="dhaka-clock" data-clock>--:--</span>
-    </p>
-    <p class="topbar-note" data-i18n="hero_badge">যাচাই করা খবর · সহজ বাংলায়</p>
-    <span class="lang-switch" role="group" data-i18n-aria="language" aria-label="ভাষা">
-      <a href="?lang=bn" data-lang-switch="bn" class="active" lang="bn">বাংলা</a>
-      <span aria-hidden="true">|</span>
-      <a href="?lang=en" data-lang-switch="en" lang="en">EN</a>
-    </span>
-  </div>
-</div>
-
-<header class="site-header" id="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="index.html" data-i18n-aria="site_name" aria-label="এসপি ইন্টেলিজেন্স">
+<div class="shell">
+  <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+  <aside class="sidebar" id="sidebar" data-i18n-aria="menu" aria-label="মেনু">
+    <a class="sidebar-brand" href="index.html" data-i18n-aria="site_name" aria-label="এসপি ইন্টেলিজেন্স">
       <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 64 64" width="48" height="48" role="img" aria-label="SP monogram"><defs><linearGradient id="spg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset=".55" stop-color="#06B6D4"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg)"/><text x="32" y="43" font-size="30" font-family="Inter, Arial, sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle">SP</text></svg>
+        <svg viewBox="0 0 64 64" width="40" height="40" role="img" aria-label="SP monogram"><defs><linearGradient id="spg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset=".55" stop-color="#06B6D4"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg)"/><text x="32" y="43" font-size="30" font-family="Inter, Arial, sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle">SP</text></svg>
       </span>
-      <span class="brand-text">
-        <span class="brand-name" data-i18n="site_name">এসপি ইন্টেলিজেন্স</span>
-        <span class="brand-tagline" data-i18n="site_tagline">বাংলাদেশ ও বিশ্বের খবর — যাচাই করা, সময়মতো, সহজ বাংলায়</span>
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-name" data-i18n="site_name">এসপি ইন্টেলিজেন্স</span>
+        <span class="sidebar-brand-tag" data-i18n="hero_badge">যাচাই করা খবর · সহজ বাংলায়</span>
       </span>
     </a>
-
-    <nav class="main-nav" data-i18n-aria="menu" aria-label="মেনু">
-      <ul class="nav-list">
-        <li><a href="index.html" class="active" data-i18n="home">হোম</a></li>
-        <li><a href="10-ghonta.html" data-i18n="section_10h">১০ ঘণ্টার আপডেট</a></li>
-        <li><a href="4-ghonta.html" data-i18n="section_4h">৪ ঘণ্টার আপডেট</a></li>
-        <li><a href="2-ghonta.html" data-i18n="section_2h">২ ঘণ্টার আপডেট</a></li>
-        <li><a href="daily.html" data-i18n="section_daily">দৈনিক ব্রিফিং</a></li>
-        <li><a href="archive.html" data-i18n="archive">আর্কাইভ</a></li>
-      </ul>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="active" aria-current="page"><i class="fa-solid fa-house" aria-hidden="true"></i><span data-i18n="home">হোম</span></a>
+      <a href="10-ghonta.html"><i class="fa-solid fa-clock" aria-hidden="true"></i><span data-i18n="section_10h">১০ ঘণ্টার আপডেট</span></a>
+      <a href="4-ghonta.html"><i class="fa-solid fa-bolt" aria-hidden="true"></i><span data-i18n="section_4h">৪ ঘণ্টার আপডেট</span></a>
+      <a href="2-ghonta.html"><i class="fa-solid fa-stopwatch" aria-hidden="true"></i><span data-i18n="section_2h">২ ঘণ্টার আপডেট</span></a>
+      <a href="daily.html"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i><span data-i18n="section_daily">দৈনিক ব্রিফিং</span></a>
+      <a href="archive.html"><i class="fa-solid fa-box-archive" aria-hidden="true"></i><span data-i18n="archive">আর্কাইভ</span></a>
     </nav>
-
-    <div class="header-actions">
-      <button type="button" class="icon-btn menu-toggle" id="menu-toggle" data-i18n-aria="menu" aria-label="মেনু" aria-expanded="false" aria-controls="mobile-menu"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+    <p class="sidebar-note" data-i18n="footer_note">সব সময় বাংলাদেশ সময় (UTC+6) অনুযায়ী।</p>
+  </aside>
+  <div class="shell-main">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <button type="button" class="icon-btn sidebar-toggle" id="sidebar-toggle" data-i18n-aria="menu" aria-label="মেনু" aria-expanded="false" aria-controls="sidebar"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+        <p class="topbar-title" data-i18n="site_name">এসপি ইন্টেলিজেন্স</p>
+        <p class="topbar-clock">
+          <svg class="icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.6 4.2 2.5-.8 1.3L11 13.5V7h2z"/></svg>
+          <span data-i18n="dhaka_time">ঢাকার সময়</span>: <span id="dhaka-clock" data-clock>--:--</span>
+        </p>
+        <span class="lang-switch" role="group" data-i18n-aria="language" aria-label="ভাষা">
+          <a href="?lang=bn" data-lang-switch="bn" class="active" lang="bn">বাংলা</a>
+          <span aria-hidden="true">|</span>
+          <a href="?lang=en" data-lang-switch="en" lang="en">EN</a>
+        </span>
+      </div>
     </div>
-  </div>
-
-  <nav class="mobile-menu" id="mobile-menu" data-i18n-aria="menu" aria-label="মেনু" hidden>
-    <a href="index.html" data-i18n="home">হোম</a>
-    <a href="10-ghonta.html" data-i18n="section_10h">১০ ঘণ্টার আপডেট</a>
-    <a href="4-ghonta.html" data-i18n="section_4h">৪ ঘণ্টার আপডেট</a>
-    <a href="2-ghonta.html" data-i18n="section_2h">২ ঘণ্টার আপডেট</a>
-    <a href="daily.html" data-i18n="section_daily">দৈনিক ব্রিফিং</a>
-    <a href="archive.html" data-i18n="archive">আর্কাইভ</a>
-  </nav>
-</header>
-
 <main id="main-content">
 <noscript><div class="container"><p class="empty-state">এই সাইটটি দেখতে আপনার ব্রাউজারে JavaScript চালু করুন। / Please enable JavaScript to view this site.</p></div></noscript>
 
-<!-- ============ DASHBOARD OVERVIEW (morning at a glance) ============ -->
-<section class="dash-head" data-i18n-aria="dash_kicker" aria-label="সকালের ড্যাশবোর্ড">
+<!-- ============ DASHBOARD HEADING ============ -->
+<section class="dash-head">
   <div class="container">
     <span class="section-kicker" data-i18n="dash_kicker">সকালের ড্যাশবোর্ড</span>
     <h1 data-i18n="dash_title">একনজরে আজকের সব খবর</h1>
     <p class="dash-date" id="dash-date" role="status"><span data-i18n="loading">লোড হচ্ছে…</span></p>
-    <p class="hero-sub" data-i18n="dash_subtitle">প্রতি ২, ৪ ও ১০ ঘণ্টায় নতুন আপডেট, আর প্রতিদিন সকাল ১০টায় দৈনিক ব্রিফিং। প্রতিটি খবরের সঙ্গে তার সূত্র দেওয়া থাকে — কোনো বানানো খবর নয়, কোনো গুজব নয়।</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="2-ghonta.html"><span data-i18n="section_2h">২ ঘণ্টার আপডেট</span> →</a>
-      <a class="btn btn-outline" href="10-ghonta.html"><span data-i18n="section_10h">১০ ঘণ্টার আপডেট</span> →</a>
-      <a class="btn btn-outline" href="daily.html"><span data-i18n="section_daily">দৈনিক ব্রিফিং</span> →</a>
-    </div>
   </div>
 </section>
 
@@ -98,63 +77,61 @@
   </div>
 </section>
 
-<!-- ============ DASHBOARD LAYOUT: sectors + rail ============ -->
-<section class="section dash-section">
-  <div class="container dash-layout">
-    <div class="dash-main">
-      <!-- 10 HOUR -->
-      <section class="dash-panel" data-i18n-aria="section_10h" aria-label="">
-        <div class="section-head-row">
-          <div>
-            <span class="section-kicker" data-i18n="section_10h"></span>
-            <h2 data-i18n="section_10h"></h2>
-            <p class="section-intro" data-i18n="section_10h_intro"></p>
-          </div>
-          <a class="btn btn-outline" href="10-ghonta.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
-        </div>
-        <div id="strip-10h"><p class="freshness-strip" role="status"><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
-        <div id="grid-10h"></div>
-      </section>
-
-      <!-- 4 HOUR -->
-      <section class="dash-panel" data-i18n-aria="section_4h" aria-label="">
-        <div class="section-head-row">
-          <div>
-            <span class="section-kicker" data-i18n="section_4h"></span>
-            <h2 data-i18n="section_4h"></h2>
-            <p class="section-intro" data-i18n="section_4h_intro"></p>
-          </div>
-          <a class="btn btn-outline" href="4-ghonta.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
-        </div>
-        <div id="strip-4h"><p class="freshness-strip" role="status"><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
-        <div id="grid-4h"></div>
-      </section>
-
-      <!-- 2 HOUR -->
-      <section class="dash-panel" data-i18n-aria="section_2h" aria-label="">
-        <div class="section-head-row">
-          <div>
-            <span class="section-kicker" data-i18n="section_2h"></span>
-            <h2 data-i18n="section_2h"></h2>
-            <p class="section-intro" data-i18n="section_2h_intro"></p>
-          </div>
-          <a class="btn btn-outline" href="2-ghonta.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
-        </div>
-        <div id="strip-2h"><p class="freshness-strip" role="status"><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
-        <div id="grid-2h"></div>
-      </section>
+<!-- ============ CHART + RECENT ACTIVITY ============ -->
+<section class="section insight-section">
+  <div class="container insight-layout">
+    <div class="card chart-panel">
+      <h2 data-i18n="chart_title">প্রতি সেকশনে খবরের সংখ্যা</h2>
+      <p class="panel-note" data-i18n="chart_note">সর্বশেষ আপডেটের তথ্য থেকে গণনা করা — কোনো অনুমান নয়।</p>
+      <div id="chart-bars"><p class="empty-state"><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
     </div>
+    <div class="card activity-panel">
+      <h2 data-i18n="recent_updates">সাম্প্রতিক আপডেট</h2>
+      <ul class="activity-list" id="activity-list"><li><span data-i18n="loading">লোড হচ্ছে…</span></li></ul>
+    </div>
+  </div>
+</section>
 
-    <!-- Right rail: top 5, upcoming, future widgets -->
-    <aside class="dash-rail" data-i18n-aria="top_5" aria-label="আজকের বিশেষ ৫টি আপডেট">
-      <div class="card rail-panel" id="rail-top5">
-        <h3 data-i18n="top_5">আজকের বিশেষ ৫টি আপডেট</h3>
-        <p class="empty-state"><span data-i18n="loading">লোড হচ্ছে…</span></p>
-      </div>
-      <div class="card rail-panel" id="rail-upcoming">
-        <h3 data-i18n="upcoming_dates">সামনে যেসব তারিখ গুরুত্বপূর্ণ</h3>
-        <p class="empty-state"><span data-i18n="loading">লোড হচ্ছে…</span></p>
-      </div>
+<!-- ============ SECTOR PANELS (latest 3, title + time only) ============ -->
+<section class="section sectors-section">
+  <div class="container">
+    <div class="sector-grid">
+      <article class="card sector-panel">
+        <div class="sector-head">
+          <h2 data-i18n="section_10h">১০ ঘণ্টার আপডেট</h2>
+          <a class="sector-more" href="10-ghonta.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
+        </div>
+        <ul class="sector-list" id="list-10h"><li><span data-i18n="loading">লোড হচ্ছে…</span></li></ul>
+      </article>
+      <article class="card sector-panel">
+        <div class="sector-head">
+          <h2 data-i18n="section_4h">৪ ঘণ্টার আপডেট</h2>
+          <a class="sector-more" href="4-ghonta.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
+        </div>
+        <ul class="sector-list" id="list-4h"><li><span data-i18n="loading">লোড হচ্ছে…</span></li></ul>
+      </article>
+      <article class="card sector-panel">
+        <div class="sector-head">
+          <h2 data-i18n="section_2h">২ ঘণ্টার আপডেট</h2>
+          <a class="sector-more" href="2-ghonta.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
+        </div>
+        <ul class="sector-list" id="list-2h"><li><span data-i18n="loading">লোড হচ্ছে…</span></li></ul>
+      </article>
+      <article class="card sector-panel">
+        <div class="sector-head">
+          <h2 data-i18n="section_daily">দৈনিক ব্রিফিং</h2>
+          <a class="sector-more" href="daily.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
+        </div>
+        <ul class="sector-list" id="list-daily"><li><span data-i18n="loading">লোড হচ্ছে…</span></li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FUTURE WIDGET SLOTS (small, quiet) ============ -->
+<section class="section widgets-section">
+  <div class="container">
+    <div class="widgets-row">
       <div class="widget-slot">
         <span class="widget-tag" data-i18n="widget_soon">শীঘ্রই আসছে</span>
         <h3 data-i18n="widget_weather">আবহাওয়া</h3>
@@ -165,95 +142,21 @@
         <h3 data-i18n="widget_markets">ডলার ও বাজার</h3>
         <p data-i18n="widget_markets_text">ডলারের হার ও বাজারের তথ্য এখানে দেখা যাবে।</p>
       </div>
-    </aside>
-  </div>
-</section>
-
-<!-- ============ DAILY BRIEFING ============ -->
-<section class="section" data-i18n-aria="section_daily" aria-label="">
-  <div class="container">
-    <div class="section-head-row">
-      <div>
-        <span class="section-kicker" data-i18n="section_daily">দৈনিক ব্রিফিং</span>
-        <h2 data-i18n="section_daily">দৈনিক ব্রিফিং</h2>
-        <p class="section-intro" data-i18n="section_daily_intro">প্রতিদিন সকাল ১০টায় — দিনের সবচেয়ে গুরুত্বপূর্ণ ৫টি খবর, সারসংক্ষেপ ও সামনের তারিখ।</p>
-      </div>
-      <a class="btn btn-outline" href="daily.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
-    </div>
-    <div id="strip-daily"><p class="freshness-strip" role="status"><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
-    <div id="briefing-daily"></div>
-  </div>
-</section>
-
-<!-- ============ HOW IT WORKS ============ -->
-<section class="section" data-i18n-aria="how_it_works" aria-label="কীভাবে কাজ করে">
-  <div class="container">
-    <div class="section-head">
-      <span class="section-kicker" data-i18n="how_it_works">কীভাবে কাজ করে</span>
-      <h2 data-i18n="how_it_works">কীভাবে কাজ করে</h2>
-    </div>
-    <div class="steps-grid">
-      <article class="card step-card">
-        <span class="step-num" aria-hidden="true">১</span>
-        <h3 data-i18n="how_1_title">১. তথ্য সংগ্রহ</h3>
-        <p data-i18n="how_1_text">নির্ভরযোগ্য সংবাদমাধ্যম ও সরকারি সূত্র থেকে নতুন তথ্য খোঁজা হয়।</p>
-      </article>
-      <article class="card step-card">
-        <span class="step-num" aria-hidden="true">২</span>
-        <h3 data-i18n="how_2_title">২. যাচাই</h3>
-        <p data-i18n="how_2_text">প্রতিটি খবর যাচাই করা হয়; গুজব ও ভুয়া খবর বাদ দেওয়া হয়।</p>
-      </article>
-      <article class="card step-card">
-        <span class="step-num" aria-hidden="true">৩</span>
-        <h3 data-i18n="how_3_title">৩. আপডেট</h3>
-        <p data-i18n="how_3_text">যাচাই করা তথ্য JSON ফাইলে বসিয়ে সাইটে আপডেট করা হয়।</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ HONESTY NOTE ============ -->
-<section class="section" data-i18n-aria="honesty_title" aria-label="আমাদের প্রতিশ্রুতি">
-  <div class="container">
-    <div class="honesty-box">
-      <span class="section-kicker" data-i18n="honesty_title">আমাদের প্রতিশ্রুতি</span>
-      <h2 data-i18n="honesty_title">আমাদের প্রতিশ্রুতি</h2>
-      <p data-i18n="honesty_text">এই সাইটে কোনো বানানো খবর, ভুয়া তথ্য বা গুজব প্রকাশ করা হয় না। কোনো বিষয়ে নতুন তথ্য না থাকলে সেটি স্পষ্টভাবে জানানো হয়। প্রতিটি গুরুত্বপূর্ণ খবরের সঙ্গে প্রকাশের তারিখ ও মূল সূত্রের লিংক থাকে।</p>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-col footer-brand-col">
-      <p class="footer-brand-name" data-i18n="site_name">এসপি ইন্টেলিজেন্স</p>
-      <p class="footer-intro" data-i18n="footer_about">এসপি ইন্টেলিজেন্স একটি ব্যক্তিগত সংবাদ ও তথ্য সাইট। বাংলাদেশ ও বিশ্বের গুরুত্বপূর্ণ খবর সহজ বাংলায়, যাচাই করে প্রকাশ করা হয়।</p>
-      <p class="footer-note" data-i18n="footer_note">সব সময় বাংলাদেশ সময় (UTC+6) অনুযায়ী।</p>
-    </div>
-    <div class="footer-col">
-      <h3 data-i18n="footer_sections">সেকশন</h3>
-      <ul class="footer-links">
-        <li><a href="10-ghonta.html" data-i18n="section_10h">১০ ঘণ্টার আপডেট</a></li>
-        <li><a href="4-ghonta.html" data-i18n="section_4h">৪ ঘণ্টার আপডেট</a></li>
-        <li><a href="2-ghonta.html" data-i18n="section_2h">২ ঘণ্টার আপডেট</a></li>
-        <li><a href="daily.html" data-i18n="section_daily">দৈনিক ব্রিফিং</a></li>
-        <li><a href="archive.html" data-i18n="archive">আর্কাইভ</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h3 data-i18n="honesty_title">আমাদের প্রতিশ্রুতি</h3>
-      <p class="footer-intro" data-i18n="honesty_text">এই সাইটে কোনো বানানো খবর, ভুয়া তথ্য বা গুজব প্রকাশ করা হয় না। কোনো বিষয়ে নতুন তথ্য না থাকলে সেটি স্পষ্টভাবে জানানো হয়। প্রতিটি গুরুত্বপূর্ণ খবরের সঙ্গে প্রকাশের তারিখ ও মূল সূত্রের লিংক থাকে।</p>
-    </div>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© <span id="footer-year">2026</span> <span data-i18n="site_name">এসপি ইন্টেলিজেন্স</span></p>
+        <p class="footer-honesty" data-i18n="honesty_text">এই সাইটে কোনো বানানো খবর, ভুয়া তথ্য বা গুজব প্রকাশ করা হয় না। কোনো বিষয়ে নতুন তথ্য না থাকলে সেটি স্পষ্টভাবে জানানো হয়। প্রতিটি গুরুত্বপূর্ণ খবরের সঙ্গে প্রকাশের তারিখ ও মূল সূত্রের লিংক থাকে।</p>
+        <p class="footer-note" data-i18n="footer_note">সব সময় বাংলাদেশ সময় (UTC+6) অনুযায়ী।</p>
+      </div>
+    </footer>
   </div>
-  <div class="footer-bottom">
-    <div class="container footer-bottom-inner">
-      <p>© <span id="footer-year">2026</span> <span data-i18n="site_name">এসপি ইন্টেলিজেন্স</span></p>
-      <p class="footer-credit" data-i18n="footer_note">সব সময় বাংলাদেশ সময় (UTC+6) অনুযায়ী।</p>
-    </div>
-  </div>
-</footer>
+</div>
 
 <nav class="bottom-nav" data-i18n-aria="menu" aria-label="মেনু">
   <a href="index.html" class="active">

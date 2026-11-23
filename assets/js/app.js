@@ -40,6 +40,11 @@
             dash_title: 'একনজরে আজকের সব খবর',
             dash_subtitle: 'প্রতি ২, ৪ ও ১০ ঘণ্টায় নতুন আপডেট, আর প্রতিদিন সকাল ১০টায় দৈনিক ব্রিফিং। প্রতিটি খবরের সঙ্গে তার সূত্র দেওয়া থাকে — কোনো বানানো খবর নয়, কোনো গুজব নয়।',
             stat_top5: 'টি বিশেষ আপডেট',
+            chart_title: 'প্রতি সেকশনে খবরের সংখ্যা',
+            chart_note: 'সর্বশেষ আপডেটের তথ্য থেকে গণনা করা — কোনো অনুমান নয়।',
+            chart_empty: 'এই মুহূর্তে কোনো সেকশনে নতুন খবর নেই।',
+            recent_updates: 'সাম্প্রতিক আপডেট',
+            no_recent: 'এখনো কোনো সাম্প্রতিক আপডেট নেই।',
             widget_weather: 'আবহাওয়া',
             widget_markets: 'ডলার ও বাজার',
             widget_soon: 'শীঘ্রই আসছে',
@@ -59,13 +64,6 @@
             summary: 'সারসংক্ষেপ',
             upcoming_dates: 'সামনে যেসব তারিখ গুরুত্বপূর্ণ',
             islamic_note: 'ইসলামিক জ্ঞান',
-            how_it_works: 'কীভাবে কাজ করে',
-            how_1_title: '১. তথ্য সংগ্রহ',
-            how_1_text: 'নির্ভরযোগ্য সংবাদমাধ্যম ও সরকারি সূত্র থেকে নতুন তথ্য খোঁজা হয়।',
-            how_2_title: '২. যাচাই',
-            how_2_text: 'প্রতিটি খবর যাচাই করা হয়; গুজব ও ভুয়া খবর বাদ দেওয়া হয়।',
-            how_3_title: '৩. আপডেট',
-            how_3_text: 'যাচাই করা তথ্য JSON ফাইলে বসিয়ে সাইটে আপডেট করা হয়।',
             honesty_title: 'আমাদের প্রতিশ্রুতি',
             honesty_text: 'এই সাইটে কোনো বানানো খবর, ভুয়া তথ্য বা গুজব প্রকাশ করা হয় না। কোনো বিষয়ে নতুন তথ্য না থাকলে সেটি স্পষ্টভাবে জানানো হয়। প্রতিটি গুরুত্বপূর্ণ খবরের সঙ্গে প্রকাশের তারিখ ও মূল সূত্রের লিংক থাকে।',
             no_entries: 'এই মুহূর্তে এই সেকশনে কোনো নতুন তথ্য নেই। পরের আপডেটের সময় আবার দেখুন।',
@@ -117,6 +115,11 @@
             dash_title: 'Everything today, at a glance',
             dash_subtitle: 'New updates every 2, 4 and 10 hours, plus a daily briefing at 10am. Every story carries its source — no invented news, no rumours.',
             stat_top5: 'top updates',
+            chart_title: 'Stories per section',
+            chart_note: 'Counted live from the latest updates — no estimates.',
+            chart_empty: 'No stories in any section right now.',
+            recent_updates: 'Recent updates',
+            no_recent: 'No recent updates yet.',
             widget_weather: 'Weather',
             widget_markets: 'Dollar & markets',
             widget_soon: 'Coming soon',
@@ -136,13 +139,6 @@
             summary: 'Summary',
             upcoming_dates: 'Upcoming important dates',
             islamic_note: 'Islamic knowledge',
-            how_it_works: 'How it works',
-            how_1_title: '1. Collect',
-            how_1_text: 'New information is gathered from reliable media and official sources.',
-            how_2_title: '2. Verify',
-            how_2_text: 'Every story is checked; rumours and fake news are left out.',
-            how_3_title: '3. Update',
-            how_3_text: 'Verified information is placed in a JSON file and the site is updated.',
             honesty_title: 'Our promise',
             honesty_text: 'No invented news, false information or rumours are published here. When there is no new information on a topic, that is stated clearly. Every important story carries its publication date and a link to the original source.',
             no_entries: 'There is no new information in this section right now. Please check again at the next update.',
@@ -550,34 +546,118 @@
         if (el) { el.textContent = dashDateText(); }
     }
 
-    // Rail: compact top-5 list + compact upcoming-dates list.
-    function renderRail(latest) {
-        var top5El = document.getElementById('rail-top5');
-        var upEl = document.getElementById('rail-upcoming');
-        if (!latest) {
-            if (top5El) { top5El.innerHTML = '<h3>' + esc(t('top_5')) + '</h3>' + emptyState('no_briefings'); }
-            if (upEl) { upEl.innerHTML = '<h3>' + esc(t('upcoming_dates')) + '</h3>' + emptyState('no_briefings'); }
-            return;
-        }
-        if (top5El) {
+    // ------------------------------------------------------------------
+    // Homepage chart + activity feed + simple sector lists.
+    // All numbers come from the real data/*.json files — nothing invented.
+    // ------------------------------------------------------------------
+
+    // Story counts per section, straight from the loaded feeds.
+    // Daily counts the latest briefing's top-5 items (same as its stat card).
+    function chartCounts(feed10, feed4, feed2, latest) {
+        return [
+            { key: '10h', label: t('section_10h'), count: feed10.entries.length, tone: 'blue', href: '10-ghonta.html' },
+            { key: '4h', label: t('section_4h'), count: feed4.entries.length, tone: 'orange', href: '4-ghonta.html' },
+            { key: '2h', label: t('section_2h'), count: feed2.entries.length, tone: 'violet', href: '2-ghonta.html' },
+            { key: 'daily', label: t('section_daily'), count: latest ? (latest.top5 || []).length : 0, tone: 'green', href: 'daily.html' }
+        ];
+    }
+
+    // Simple horizontal bar chart: one bar per section, labelled with its
+    // real count. Bar width is relative to the largest section.
+    function renderChart(counts) {
+        var max = 0;
+        counts.forEach(function (c) { if (c.count > max) { max = c.count; } });
+        if (max <= 0) { return emptyState('chart_empty'); }
+        var html = '<ul class="chart-rows">';
+        counts.forEach(function (c) {
+            var pct = Math.round((c.count / max) * 100);
+            html += '<li><div class="chart-row-label"><span>' + esc(c.label) + '</span>' +
+                '<span class="chart-value">' + esc(bnDigits(c.count)) + '</span></div>' +
+                '<div class="chart-track"><div class="chart-fill chart-fill-' + esc(c.tone) +
+                '" style="width:' + pct + '%"></div></div></li>';
+        });
+        return html + '</ul>';
+    }
+
+    // Newest items across all four sections, newest first (max 8).
+    // Feed entries carry their own published_at; daily top-5 items share
+    // their briefing's published_at. Each item links to its source.
+    function collectActivity(feed10, feed4, feed2, latest) {
+        var items = [];
+        var feeds = [
+            { feed: feed10, label: t('section_10h'), href: '10-ghonta.html', tone: 'blue' },
+            { feed: feed4, label: t('section_4h'), href: '4-ghonta.html', tone: 'orange' },
+            { feed: feed2, label: t('section_2h'), href: '2-ghonta.html', tone: 'violet' }
+        ];
+        feeds.forEach(function (f) {
+            f.feed.entries.forEach(function (e) {
+                items.push({ title: e.title || '', url: e.source_url || f.href,
+                    source: e.source_name || '', section: f.label,
+                    time: e.published_at || '', tone: f.tone });
+            });
+        });
+        if (latest) {
             var top5 = Array.isArray(latest.top5) ? latest.top5 : [];
-            top5El.innerHTML = '<h3>' + esc(t('top_5')) + '</h3>' +
-                (top5.length
-                    ? '<ol class="compact-list">' + top5.map(function (item) {
-                        return '<li><a href="daily.html">' + esc(item.title || '') + '</a></li>';
-                    }).join('') + '</ol>'
-                    : emptyState('no_briefings'));
+            top5.forEach(function (item) {
+                items.push({ title: item.title || '', url: 'daily.html', source: '',
+                    section: t('section_daily'), time: latest.published_at || '', tone: 'green' });
+            });
         }
-        if (upEl) {
-            var upcoming = Array.isArray(latest.upcoming) ? latest.upcoming : [];
-            upEl.innerHTML = '<h3>' + esc(t('upcoming_dates')) + '</h3>' +
-                (upcoming.length
-                    ? '<ul class="compact-list">' + upcoming.map(function (u) {
-                        return '<li>' + (u.date ? '<strong>' + esc(bnDate(u.date)) + ':</strong> ' : '') +
-                            esc(u.text || '') + '</li>';
-                    }).join('') + '</ul>'
-                    : emptyState('no_briefings'));
+        items.sort(function (a, b) {
+            return String(b.time || '').localeCompare(String(a.time || ''));
+        });
+        return items.slice(0, 8);
+    }
+
+    function renderActivity(items) {
+        if (!items.length) {
+            return '<li class="activity-empty">' + esc(t('no_recent')) + '</li>';
         }
+        return items.map(function (item) {
+            var meta = [];
+            if (item.source) { meta.push(esc(item.source)); }
+            meta.push(esc(item.section));
+            if (item.time) { meta.push(esc(freshness(item.time))); }
+            var ext = item.url.indexOf('://') !== -1 ? ' target="_blank" rel="noopener"' : '';
+            return '<li><span class="activity-dot activity-dot-' + esc(item.tone) +
+                '" aria-hidden="true"></span><span class="activity-body"><a href="' +
+                esc(item.url) + '"' + ext + '>' + esc(item.title) + '</a>' +
+                '<span class="activity-meta">' + meta.join(' · ') + '</span></span></li>';
+        }).join('');
+    }
+
+    // Homepage sector panel: latest 3 items, title + time only.
+    function simpleFeedList(entries, href) {
+        var list = (entries || []).slice(0, 3);
+        if (!list.length) {
+            return '<li class="sector-empty">' + esc(t('no_entries')) + '</li>';
+        }
+        return list.map(function (e) {
+            var url = e.source_url || href;
+            var ext = url.indexOf('://') !== -1 ? ' target="_blank" rel="noopener"' : '';
+            var when = e.published_at
+                ? esc(bnDatetime(e.published_at)) + ' (' + esc(freshness(e.published_at)) + ')'
+                : '';
+            return '<li><a href="' + esc(url) + '"' + ext + '>' + esc(e.title || '') + '</a>' +
+                '<span class="sector-time">' + when + '</span></li>';
+        }).join('');
+    }
+
+    // Daily panel: latest briefing's top-5 titles + briefing time.
+    function simpleDailyList(latest) {
+        if (!latest) {
+            return '<li class="sector-empty">' + esc(t('no_briefings')) + '</li>';
+        }
+        var top5 = Array.isArray(latest.top5) ? latest.top5 : [];
+        if (!top5.length) {
+            return '<li class="sector-empty">' + esc(t('no_briefings')) + '</li>';
+        }
+        var when = latest.published_at ? bnDatetime(latest.published_at)
+            : (latest.date ? bnDate(latest.date) : '');
+        return top5.map(function (item) {
+            return '<li><a href="daily.html">' + esc(item.title || '') + '</a>' +
+                '<span class="sector-time">' + esc(when) + '</span></li>';
+        }).join('');
     }
 
     // ------------------------------------------------------------------
@@ -603,21 +683,14 @@
                     label: t('section_daily'), count: latest ? (latest.top5 || []).length : 0, unit: t('stat_top5'),
                     last: latest ? (latest.published_at || '') : '', next: nextDaily() })
             ].join(''));
-            setHTML('strip-10h', freshnessStrip(feed10.meta, 'next_update'));
-            setHTML('grid-10h', feed10.entries.length
-                ? '<div class="news-grid">' + feed10.entries.slice(0, 3).map(entryCard).join('') + '</div>'
-                : emptyState('no_entries'));
-            setHTML('strip-4h', freshnessStrip(feed4.meta, 'next_update'));
-            setHTML('grid-4h', feed4.entries.length
-                ? '<div class="news-grid">' + feed4.entries.slice(0, 3).map(entryCard).join('') + '</div>'
-                : emptyState('no_entries'));
-            setHTML('strip-2h', freshnessStrip(feed2.meta, 'next_update'));
-            setHTML('grid-2h', feed2.entries.length
-                ? '<div class="news-grid">' + feed2.entries.slice(0, 3).map(entryCard).join('') + '</div>'
-                : emptyState('no_entries'));
-            setHTML('strip-daily', dailyStrip(latest));
-            setHTML('briefing-daily', latest ? dailyCard(latest, false) : emptyState('no_briefings'));
-            renderRail(latest);
+            // Chart (real counts) + activity feed (newest first).
+            setHTML('chart-bars', renderChart(chartCounts(feed10, feed4, feed2, latest)));
+            setHTML('activity-list', renderActivity(collectActivity(feed10, feed4, feed2, latest)));
+            // Four sector panels — latest 3 items, title + time only.
+            setHTML('list-10h', simpleFeedList(feed10.entries, '10-ghonta.html'));
+            setHTML('list-4h', simpleFeedList(feed4.entries, '4-ghonta.html'));
+            setHTML('list-2h', simpleFeedList(feed2.entries, '2-ghonta.html'));
+            setHTML('list-daily', simpleDailyList(latest));
         });
     }
 
@@ -718,6 +791,9 @@
         nextUpdate: nextUpdate, nextDaily: nextDaily,
         entryCard: entryCard, dailyCard: dailyCard,
         freshnessStrip: freshnessStrip, dailyStrip: dailyStrip,
-        statCard: statCard, dashDateText: dashDateText
+        statCard: statCard, dashDateText: dashDateText,
+        chartCounts: chartCounts, renderChart: renderChart,
+        collectActivity: collectActivity, renderActivity: renderActivity,
+        simpleFeedList: simpleFeedList, simpleDailyList: simpleDailyList
     };
 })();

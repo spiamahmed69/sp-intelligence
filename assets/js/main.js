@@ -5,31 +5,40 @@
 (function () {
     'use strict';
 
-    // --- Mobile menu -------------------------------------------------------
-    var toggle = document.getElementById('menu-toggle');
-    var menu = document.getElementById('mobile-menu');
-    if (toggle && menu) {
-        toggle.addEventListener('click', function () {
-            var open = menu.hasAttribute('hidden');
-            if (open) {
-                menu.removeAttribute('hidden');
-                toggle.setAttribute('aria-expanded', 'true');
+    // --- Sidebar drawer (mobile / tablet) ----------------------------------
+    // On desktop (>=1024px) the sidebar is always visible; below that the
+    // top-bar button opens it as an overlay drawer.
+    var sidebarToggle = document.getElementById('sidebar-toggle');
+    var sidebar = document.getElementById('sidebar');
+    var backdrop = document.getElementById('sidebar-backdrop');
+    function closeSidebar() {
+        document.body.classList.remove('sidebar-open');
+        if (backdrop) { backdrop.hidden = true; }
+        if (sidebarToggle) { sidebarToggle.setAttribute('aria-expanded', 'false'); }
+    }
+    function openSidebar() {
+        document.body.classList.add('sidebar-open');
+        if (backdrop) { backdrop.hidden = false; }
+        if (sidebarToggle) { sidebarToggle.setAttribute('aria-expanded', 'true'); }
+    }
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function () {
+            if (document.body.classList.contains('sidebar-open')) {
+                closeSidebar();
             } else {
-                menu.setAttribute('hidden', '');
-                toggle.setAttribute('aria-expanded', 'false');
+                openSidebar();
             }
         });
-        menu.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                menu.setAttribute('hidden', '');
-                toggle.setAttribute('aria-expanded', 'false');
-            });
+        if (backdrop) {
+            backdrop.addEventListener('click', closeSidebar);
+        }
+        sidebar.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', closeSidebar);
         });
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && !menu.hasAttribute('hidden')) {
-                menu.setAttribute('hidden', '');
-                toggle.setAttribute('aria-expanded', 'false');
-                toggle.focus();
+            if (e.key === 'Escape' && document.body.classList.contains('sidebar-open')) {
+                closeSidebar();
+                sidebarToggle.focus();
             }
         });
     }

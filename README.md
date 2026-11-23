@@ -22,29 +22,58 @@ source is untouched; this folder is a separate, self-contained static site.
   Siliguri) — `assets/css/style.css` and `assets/js/main.js` are copied
   from the PHP site and extended for the dashboard layout.
 
+## Dashboard shell (all pages)
+
+Every page uses the same clean admin-dashboard shell (modelled on the
+reference dashboard screenshot):
+
+- **Left sidebar** — brand + nav (হোম, ১০ / ৪ / ২ ঘণ্টা, দৈনিক ব্রিফিং,
+  আর্কাইভ) with the active page highlighted. Fixed on desktop
+  (≥1024px); below that it hides and opens as a slide-in drawer from
+  the top-bar hamburger (Escape / backdrop click closes it).
+- **Slim top bar** — hamburger (mobile/tablet only), site name, live
+  Dhaka clock/date, language toggle.
+- **Mobile bottom nav** (5 items) stays as before.
+- **Slim footer** — one quiet line: © year + site name, the single
+  honesty line, and the "বাংলাদেশ সময় (UTC+6)" note. No footer
+  columns, no repeated sections.
+
+The old sticky header + top nav + hamburger mobile menu are gone
+(this also removed a duplicated ২-ঘণ্টা link that the old header had
+on the feed pages).
+
 ## Dashboard homepage (`index.html`)
 
-The homepage is a morning at-a-glance dashboard (modelled on the admin
-dashboard screenshot the user supplied):
+Decluttered morning dashboard — one idea per screen area, lots of
+whitespace:
 
-- **Top bar** — site name, live Dhaka clock, language toggle.
-- **Dashboard header** — "সকালের ড্যাশবোর্ড" with today's date in
-  Bengali plus the Hijri date (labelled আনুমানিক).
+- **Heading** — "সকালের ড্যাশবোর্ড" with today's date in Bengali plus
+  the Hijri date (labelled আনুমানিক).
 - **4 gradient stat cards** — one per sector (১০ ঘণ্টা blue, ৪ ঘণ্টা
   orange, ২ ঘণ্টা violet, দৈনিক ব্রিফিং green), each showing the item
   count and the last/next update time, read live from the JSON files.
   Each card links to its full section page.
-- **Sector panels** — one panel per sector (১০ / ৪ / ২ ঘণ্টা) with the
-  latest 3 items, freshness strip and "সব দেখুন →" link.
-- **Right rail** — "আজকের বিশেষ ৫টি" (compact top-5 list from
-  `daily.json`) and "সামনে যা আছে" (upcoming dates), plus **2 clearly
-  marked empty widget slots** (আবহাওয়া, ডলার ও বাজার — "শীঘ্রই
-  আসছে", no fake data) for future additions.
-- **Daily briefing** section below (latest briefing card), then
-  how-it-works and the honesty note.
-- On desktop (≥1024px) the sectors sit in a main column with the rail
-  on the right; on mobile everything stacks. Bottom nav has 5 items
-  (হোম, ১০ ঘণ্টা, ৪ ঘণ্টা, ২ ঘণ্টা, দৈনিক).
+- **Chart + activity row** (like the reference: chart panel left,
+  activity feed right):
+  - **Chart** — a simple horizontal bar chart of খবরের সংখ্যা per
+    section (১০ / ২ / ৩ / ৫ in the current data), computed live from
+    `data/*.json` — no invented numbers, no fake trends. Daily counts
+    the latest briefing's top-5 items, same as its stat card.
+  - **সাম্প্রতিক আপডেট** — the newest items across all four sections
+    (max 8), sorted newest-first by `published_at` with relative time
+    (e.g. "৭ মিনিট আগে"), each linking to its source. Daily top-5
+    items use their briefing's `published_at` and link to `daily.html`.
+- **4 sector panels** — one per sector, simplified: latest 3 items
+  only, title + time, generous spacing, no freshness strips, no full
+  news cards. "সব দেখুন →" links to the full section page.
+- **2 small widget slots** at the bottom (আবহাওয়া, ডলার ও বাজার —
+  "শীঘ্রই আসছে", no fake data).
+
+Removed from the homepage: the right rail (আজকের বিশেষ ৫টি + সামনে
+যা আছে — that content lives on `daily.html` only, in the full
+briefing card), the how-it-works block, the separate honesty section
+(one line in the footer now), and the hero action buttons (the stat
+cards already link to the sections).
 
 ## Sectors
 
@@ -56,8 +85,7 @@ dashboard screenshot the user supplied):
 | দৈনিক ব্রিফিং | `daily.html` | `data/daily.json` | daily 10:00 |
 
 The 2-hour section was added 2026-11-23 at the user's request and
-fills the old 4th-section placeholder (`id="section-4-placeholder"`),
-which has been removed. `data/2h.json` uses the exact same entry
+fills the old 4th-section placeholder, which has been removed. `data/2h.json` uses the exact same entry
 format as `data/4h.json` (`meta.section` `"2h"`, `interval_hours` 2).
 Seeded 2026-11-23 08:49 with 3 verified items from the 06:49–08:49
 window (Dawn live blog on the Iran war; Dawn's PKT times converted
@@ -67,7 +95,7 @@ to Dhaka time — see the file's `note_bn`).
 
 | Page | What it shows |
 |---|---|
-| `index.html` | Dashboard: stat cards, 3 sector panels, right rail (top 5 + upcoming + 2 future widget slots), daily briefing, how-it-works, honesty note |
+| `index.html` | Dashboard: stat cards, chart + recent-activity feed, 4 simplified sector panels (latest 3, title + time), 2 small widget slots |
 | `10-ghonta.html` | Full 10-hour feed + count + freshness strip |
 | `4-ghonta.html` | Full 4-hour feed + count + freshness strip |
 | `2-ghonta.html` | Full 2-hour feed + count + freshness strip |
@@ -104,10 +132,11 @@ the daily job prepends a briefing to `data/daily.json`.
 
 ## Future widget slots
 
-The homepage rail has 2 dashed, clearly labelled slots (আবহাওয়া,
-ডলার ও বাজার) with no data in them. To fill one later: replace the
-`.widget-slot` block in `index.html` with a real panel and add its
-data/rendering in `app.js`. Do not put invented numbers in them.
+The homepage has 2 small, dashed, clearly labelled slots at the
+bottom (আবহাওয়া, ডলার ও বাজার) with no data in them. To fill one
+later: replace the `.widget-slot` block in `index.html` with a real
+panel and add its data/rendering in `app.js`. Do not put invented
+numbers in them.
 
 ## Local test
 
