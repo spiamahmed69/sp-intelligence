@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>হোম — এসপি ইন্টেলিজেন্স</title>
-<meta name="description" content="বাংলাদেশ ও বিশ্বের খবর — যাচাই করা, সময়মতো, সহজ বাংলায়">
+<meta name="description" content="বাংলাদেশ ও বিশ্বের খবর — সহজ বাংলায়, প্রতিদিন সকাল ৮টায় দৈনিক ব্রিফিং">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Hind+Siliguri:wght@500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563EB'/%3E%3Ctext x='32' y='44' font-size='30' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'%3ESP%3C/text%3E%3C/svg%3E">
 </head>
@@ -24,16 +26,14 @@
       </span>
       <span class="sidebar-brand-text">
         <span class="sidebar-brand-name" data-i18n="site_name">এসপি ইন্টেলিজেন্স</span>
-        <span class="sidebar-brand-tag" data-i18n="hero_badge">যাচাই করা খবর · সহজ বাংলায়</span>
+        <span class="sidebar-brand-tag" data-i18n="hero_badge">প্রতিদিন সকাল ৮টায়</span>
       </span>
     </a>
     <nav class="sidebar-nav">
       <a href="index.html" class="active" aria-current="page"><i class="fa-solid fa-house" aria-hidden="true"></i><span data-i18n="home">হোম</span></a>
-      <a href="10-ghonta.html"><i class="fa-solid fa-clock" aria-hidden="true"></i><span data-i18n="section_10h">১০ ঘণ্টার আপডেট</span></a>
-      <a href="4-ghonta.html"><i class="fa-solid fa-bolt" aria-hidden="true"></i><span data-i18n="section_4h">৪ ঘণ্টার আপডেট</span></a>
-      <a href="2-ghonta.html"><i class="fa-solid fa-stopwatch" aria-hidden="true"></i><span data-i18n="section_2h">২ ঘণ্টার আপডেট</span></a>
       <a href="daily.html"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i><span data-i18n="section_daily">দৈনিক ব্রিফিং</span></a>
       <a href="archive.html"><i class="fa-solid fa-box-archive" aria-hidden="true"></i><span data-i18n="archive">আর্কাইভ</span></a>
+      <a href="admin.html"><i class="fa-solid fa-lock" aria-hidden="true"></i><span data-i18n="admin">অ্যাডমিন</span></a>
     </nav>
     <p class="sidebar-note" data-i18n="footer_note">সব সময় বাংলাদেশ সময় (UTC+6) অনুযায়ী।</p>
   </aside>
@@ -59,19 +59,19 @@
 <!-- ============ DASHBOARD HEADING ============ -->
 <section class="dash-head">
   <div class="container">
-    <span class="section-kicker" data-i18n="dash_kicker">সকালের ড্যাশবোর্ড</span>
+    <span class="section-kicker" data-i18n="dash_kicker">দৈনিক ব্রিফিং</span>
     <h1 data-i18n="dash_title">একনজরে আজকের সব খবর</h1>
+    <p class="dash-sub" data-i18n="dash_subtitle">প্রতিদিন সকাল ৮টায় দৈনিক ব্রিফিং</p>
     <p class="dash-date" id="dash-date" role="status"><span data-i18n="loading">লোড হচ্ছে…</span></p>
   </div>
 </section>
 
-<!-- ============ STAT CARDS (one per sector) ============ -->
-<section class="section stat-section" aria-label="সেকশন সারসংক্ষেপ">
+<!-- ============ STAT CARDS (3, live from the latest briefing) ============ -->
+<section class="section stat-section" aria-label="সারসংক্ষেপ">
   <div class="container">
     <div class="stat-grid" id="stat-grid">
       <div class="stat-card stat-blue"><p><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
       <div class="stat-card stat-orange"><p><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
-      <div class="stat-card stat-violet"><p><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
       <div class="stat-card stat-green"><p><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
     </div>
   </div>
@@ -81,8 +81,8 @@
 <section class="section insight-section">
   <div class="container insight-layout">
     <div class="card chart-panel">
-      <h2 data-i18n="chart_title">প্রতি সেকশনে খবরের সংখ্যা</h2>
-      <p class="panel-note" data-i18n="chart_note">সর্বশেষ আপডেটের তথ্য থেকে গণনা করা — কোনো অনুমান নয়।</p>
+      <h2 id="chart-title" data-i18n="chart_title">সূত্র অনুযায়ী খবর</h2>
+      <p class="panel-note" data-i18n="chart_note">সর্বশেষ ব্রিফিংয়ের তথ্য থেকে গণনা করা।</p>
       <div id="chart-bars"><p class="empty-state"><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
     </div>
     <div class="card activity-panel">
@@ -92,56 +92,29 @@
   </div>
 </section>
 
-<!-- ============ SECTOR PANELS (latest 3, title + time only) ============ -->
-<section class="section sectors-section">
-  <div class="container">
-    <div class="sector-grid">
-      <article class="card sector-panel">
-        <div class="sector-head">
-          <h2 data-i18n="section_10h">১০ ঘণ্টার আপডেট</h2>
-          <a class="sector-more" href="10-ghonta.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
-        </div>
-        <ul class="sector-list" id="list-10h"><li><span data-i18n="loading">লোড হচ্ছে…</span></li></ul>
-      </article>
-      <article class="card sector-panel">
-        <div class="sector-head">
-          <h2 data-i18n="section_4h">৪ ঘণ্টার আপডেট</h2>
-          <a class="sector-more" href="4-ghonta.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
-        </div>
-        <ul class="sector-list" id="list-4h"><li><span data-i18n="loading">লোড হচ্ছে…</span></li></ul>
-      </article>
-      <article class="card sector-panel">
-        <div class="sector-head">
-          <h2 data-i18n="section_2h">২ ঘণ্টার আপডেট</h2>
-          <a class="sector-more" href="2-ghonta.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
-        </div>
-        <ul class="sector-list" id="list-2h"><li><span data-i18n="loading">লোড হচ্ছে…</span></li></ul>
-      </article>
-      <article class="card sector-panel">
-        <div class="sector-head">
-          <h2 data-i18n="section_daily">দৈনিক ব্রিফিং</h2>
-          <a class="sector-more" href="daily.html"><span data-i18n="view_all">সব দেখুন</span> →</a>
-        </div>
-        <ul class="sector-list" id="list-daily"><li><span data-i18n="loading">লোড হচ্ছে…</span></li></ul>
-      </article>
+<!-- ============ DONUT PANELS ============ -->
+<section class="section donut-section">
+  <div class="container donut-grid">
+    <div class="card donut-panel">
+      <h2 id="donut-sources-title" data-i18n="donut_sources_title">সূত্র অনুযায়ী ভাগ</h2>
+      <div id="donut-sources"><p class="empty-state"><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
+    </div>
+    <div class="card donut-panel">
+      <h2 id="donut-dates-title" data-i18n="donut_dates_title">প্রকাশের তারিখ অনুযায়ী ভাগ</h2>
+      <div id="donut-dates"><p class="empty-state"><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
     </div>
   </div>
 </section>
 
-<!-- ============ FUTURE WIDGET SLOTS (small, quiet) ============ -->
-<section class="section widgets-section">
+<!-- ============ BRIEFING PREVIEW (numbered 1–5) ============ -->
+<section class="section preview-section">
   <div class="container">
-    <div class="widgets-row">
-      <div class="widget-slot">
-        <span class="widget-tag" data-i18n="widget_soon">শীঘ্রই আসছে</span>
-        <h3 data-i18n="widget_weather">আবহাওয়া</h3>
-        <p data-i18n="widget_weather_text">ঢাকার আবহাওয়া ও তাপমাত্রা এখানে দেখা যাবে।</p>
+    <div class="card preview-panel">
+      <div class="sector-head">
+        <h2 data-i18n="briefing_preview">আজকের বিশেষ ৫টি খবর</h2>
+        <a class="sector-more" href="daily.html"><span data-i18n="view_full_briefing">পুরো ব্রিফিং পড়ুন</span> →</a>
       </div>
-      <div class="widget-slot">
-        <span class="widget-tag" data-i18n="widget_soon">শীঘ্রই আসছে</span>
-        <h3 data-i18n="widget_markets">ডলার ও বাজার</h3>
-        <p data-i18n="widget_markets_text">ডলারের হার ও বাজারের তথ্য এখানে দেখা যাবে।</p>
-      </div>
+      <div id="briefing-preview"><p class="empty-state"><span data-i18n="loading">লোড হচ্ছে…</span></p></div>
     </div>
   </div>
 </section>
@@ -150,9 +123,7 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>© <span id="footer-year">2026</span> <span data-i18n="site_name">এসপি ইন্টেলিজেন্স</span></p>
-        <p class="footer-honesty" data-i18n="honesty_text">এই সাইটে কোনো বানানো খবর, ভুয়া তথ্য বা গুজব প্রকাশ করা হয় না। কোনো বিষয়ে নতুন তথ্য না থাকলে সেটি স্পষ্টভাবে জানানো হয়। প্রতিটি গুরুত্বপূর্ণ খবরের সঙ্গে প্রকাশের তারিখ ও মূল সূত্রের লিংক থাকে।</p>
-        <p class="footer-note" data-i18n="footer_note">সব সময় বাংলাদেশ সময় (UTC+6) অনুযায়ী।</p>
+        <p>© <span id="footer-year">2026</span> <span data-i18n="site_name">এসপি ইন্টেলিজেন্স</span> · <span data-i18n="footer_note">সব সময় বাংলাদেশ সময় (UTC+6) অনুযায়ী।</span></p>
       </div>
     </footer>
   </div>
@@ -162,17 +133,14 @@
   <a href="index.html" class="active">
     <i class="fa-solid fa-house" aria-hidden="true"></i><span data-i18n="home">হোম</span>
   </a>
-  <a href="10-ghonta.html">
-    <i class="fa-solid fa-clock" aria-hidden="true"></i><span data-i18n="section_10h">১০ ঘণ্টার আপডেট</span>
-  </a>
-  <a href="4-ghonta.html">
-    <i class="fa-solid fa-bolt" aria-hidden="true"></i><span data-i18n="section_4h">৪ ঘণ্টার আপডেট</span>
-  </a>
-  <a href="2-ghonta.html">
-    <i class="fa-solid fa-stopwatch" aria-hidden="true"></i><span data-i18n="section_2h">২ ঘণ্টার আপডেট</span>
-  </a>
   <a href="daily.html">
     <i class="fa-solid fa-calendar-day" aria-hidden="true"></i><span data-i18n="section_daily">দৈনিক ব্রিফিং</span>
+  </a>
+  <a href="archive.html">
+    <i class="fa-solid fa-box-archive" aria-hidden="true"></i><span data-i18n="archive">আর্কাইভ</span>
+  </a>
+  <a href="admin.html">
+    <i class="fa-solid fa-lock" aria-hidden="true"></i><span data-i18n="admin">অ্যাডমিন</span>
   </a>
 </nav>
 

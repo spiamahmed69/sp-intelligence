@@ -147,12 +147,15 @@ body.sidebar-open .sidebar {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: var(--ink);
+  color: #FFFFFF;
   min-height: 44px;
-  padding: 4px 10px 16px;
+  padding: 12px 10px;
   margin-bottom: 12px;
-  border-bottom: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1E40AF, #2563EB 60%, #06B6D4);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.28);
 }
+.sidebar-brand:hover { color: #FFFFFF; }
 .brand-mark { flex: none; line-height: 0; }
 .sidebar-brand-name {
   display: block;
@@ -160,11 +163,12 @@ body.sidebar-open .sidebar {
   font-size: 1.1rem;
   font-weight: 800;
   line-height: 1.25;
+  color: #FFFFFF;
 }
 .sidebar-brand-tag {
   display: block;
   font-size: 0.75rem;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.35;
 }
 .sidebar-nav {
@@ -462,10 +466,28 @@ body.sidebar-open .sidebar {
   text-align: center;
   color: var(--muted);
 }
+
+/* --- Load-error banner (app.js injects it at the top of <main>) --- */
+.load-error-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 16px auto 0;
+  max-width: 1120px;
+  width: calc(100% - (var(--space, 20px) * 2));
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+.load-error-banner p { margin: 0; flex: 1 1 240px; }
+.load-error-error { background: #FEE2E2; border: 1px solid #FCA5A5; color: #991B1B; }
+.load-error-info { background: #DBEAFE; border: 1px solid #93C5FD; color: var(--blue-dark); }
+.load-retry-btn { flex: none; }
 .center-cta { text-align: center; margin-top: 20px; }
 .mt-2 { margin-top: 16px; }
 
-/* --- Slim footer: one quiet line, honesty note, time note --- */
+/* --- Slim footer: one quiet line --- */
 .site-footer {
   margin-top: 48px;
   background: #FFFFFF;
@@ -473,9 +495,7 @@ body.sidebar-open .sidebar {
   color: var(--muted);
 }
 .footer-inner { padding-top: 20px; padding-bottom: 96px; font-size: 0.9rem; }
-.footer-inner p { margin: 0 0 6px; }
-.footer-inner p:last-child { margin-bottom: 0; }
-.footer-honesty { color: var(--ink-soft); }
+.footer-inner p { margin: 0; }
 
 /* --- Mobile bottom nav (5 items) --- */
 .bottom-nav {
@@ -531,6 +551,11 @@ body.sidebar-open .sidebar {
    ========================================================================== */
 .dash-head { padding: 28px 0 0; }
 .dash-head h1 { margin-bottom: 6px; }
+.dash-sub {
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
 .dash-date {
   font-weight: 700;
   font-size: 1.05rem;
@@ -578,6 +603,7 @@ body.sidebar-open .sidebar {
 .stat-label { font-weight: 700; font-size: 1.02rem; }
 .stat-num { font-size: 2.1rem; font-weight: 800; line-height: 1.15; }
 .stat-unit { font-size: 1rem; font-weight: 700; }
+.stat-time { font-size: 1.35rem; font-weight: 800; line-height: 1.3; }
 .stat-meta { font-size: 0.88rem; opacity: 0.95; }
 
 /* --- Chart + activity row (reference: Total Sale chart + User Activity) --- */
@@ -643,14 +669,65 @@ body.sidebar-open .sidebar {
 .activity-body a:hover { color: var(--blue-dark); text-decoration: underline; }
 .activity-meta { display: block; font-size: 0.86rem; color: var(--muted); margin-top: 2px; }
 
-/* --- Sector panels: title + time only, generous spacing --- */
-.sectors-section { padding-top: 12px; }
-.sector-grid {
+/* --- Donut panels (reference: Daily Traffic / Productivity) --- */
+.donut-section { padding-top: 12px; }
+.donut-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
 }
-.sector-panel { padding: 20px 20px 8px; }
+.donut-panel h2 { font-size: 1.2rem; margin-bottom: 12px; }
+.donut-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+}
+.donut-svg { flex: none; }
+.donut-total-num {
+  font-size: 2rem;
+  font-weight: 800;
+  fill: var(--ink);
+  font-family: var(--font-head);
+}
+.donut-total-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  fill: var(--muted);
+}
+.donut-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  flex: 1;
+  min-width: 180px;
+}
+.donut-legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  min-height: 28px;
+}
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex: none;
+}
+.legend-count {
+  margin-left: auto;
+  color: var(--muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* --- Numbered briefing list (homepage preview, daily page, archive) --- */
+.preview-section { padding-top: 12px; }
+.preview-panel { padding: 20px 20px 8px; }
+.preview-panel .sector-head { margin-bottom: 8px; }
 .sector-head {
   display: flex;
   align-items: baseline;
@@ -667,45 +744,48 @@ body.sidebar-open .sidebar {
   display: inline-flex;
   align-items: center;
 }
-.sector-list { list-style: none; margin: 0; padding: 0; }
-.sector-list li { padding: 12px 0; border-bottom: 1px solid var(--hairline); }
-.sector-list li:last-child { border-bottom: none; }
-.sector-list a {
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 600;
-  line-height: 1.45;
-  display: block;
-}
-.sector-list a:hover { color: var(--blue-dark); text-decoration: underline; }
-.sector-time { display: block; font-size: 0.86rem; color: var(--muted); margin-top: 2px; }
-.sector-empty { color: var(--muted); }
-
-/* --- Future widget slots: small, quiet, clearly marked, no fake data --- */
-.widgets-section { padding-top: 12px; }
-.widgets-row {
+.brief-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 4px;
 }
-.widget-slot {
-  border: 2px dashed #CBD5E1;
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.5);
-  padding: 16px 18px;
+.brief-list li {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--hairline);
 }
-.widget-slot h3 { font-size: 1rem; margin-bottom: 4px; }
-.widget-slot p { color: var(--muted); font-size: 0.92rem; margin-bottom: 0; }
-.widget-tag {
-  display: inline-block;
-  background: #DBEAFE;
-  color: var(--blue-dark);
-  font-weight: 700;
-  font-size: 0.85rem;
-  border-radius: 999px;
-  padding: 4px 12px;
-  margin-bottom: 8px;
+.brief-list li:last-child { border-bottom: none; }
+.brief-num {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563EB, #06B6D4);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
 }
+.brief-body { min-width: 0; }
+.brief-body h3 { font-size: 1.15rem; margin: 0 0 4px; }
+.brief-body p { margin: 0 0 6px; color: var(--ink-soft); }
+.brief-body p:last-child { margin-bottom: 0; }
+.brief-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.brief-meta a { font-weight: 700; }
+.brief-list-compact li { padding: 10px 0; }
+.brief-list-compact .brief-body h3 { font-size: 1.05rem; margin-bottom: 0; }
 
 /* --- Responsive --- */
 @media (min-width: 480px) {
@@ -715,12 +795,11 @@ body.sidebar-open .sidebar {
   .section-head-row { flex-direction: row; align-items: flex-end; justify-content: space-between; }
   .section-head-row .btn { align-self: auto; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
-  .widgets-row { grid-template-columns: 1fr 1fr; }
 }
 @media (min-width: 768px) {
   h1 { font-size: 2.4rem; }
   .news-grid { grid-template-columns: 1fr 1fr; }
-  .sector-grid { grid-template-columns: 1fr 1fr; }
+  .donut-grid { grid-template-columns: 1fr 1fr; }
   .bottom-nav { display: none; }
   .footer-inner { padding-bottom: 24px; }
   .back-to-top { bottom: 24px; }
@@ -732,7 +811,7 @@ body.sidebar-open .sidebar {
   .sidebar-toggle { display: none; }
   .topbar-title { display: none; }
   .topbar-inner { padding: 4px 28px; }
-  .stat-grid { grid-template-columns: repeat(4, 1fr); }
+  .stat-grid { grid-template-columns: repeat(3, 1fr); }
   .insight-layout { grid-template-columns: 1.5fr 1fr; }
   .section { padding: 36px 0 12px; }
   .dash-head { padding-top: 36px; }
