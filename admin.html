@@ -297,20 +297,19 @@
  * Firebase Auth (Email/Password) + Realtime Database editor.
  * Reads/writes /news/10h, /news/4h, /news/2h, /news/daily.
  * No news data is invented or seeded here — editors start from whatever
- * is actually in the database. Only the public web config below is used.
+ * is actually in the database. The Firebase web config is fetched at
+ * startup from the public config node in the database — it is not
+ * stored in this file.
  */
 (function () {
     'use strict';
 
-    var firebaseConfig = {
-      apiKey: "AIzaSyDjoyToSSpQJhUjFyFN3vnpL5bNU3KQaD4",
-      authDomain: "sp-intelligence-fbbf9.firebaseapp.com",
-      databaseURL: "https://sp-intelligence-fbbf9-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "sp-intelligence-fbbf9",
-      storageBucket: "sp-intelligence-fbbf9.firebasestorage.app",
-      messagingSenderId: "774924786257",
-      appId: "1:774924786257:web:ff4eb0d0dd974c02503670"
-    };
+    /* The web config is NOT stored in this file (it must never be committed
+     * to the repo). It is fetched at startup from the public config node in
+     * the database — readable by anyone, contains no secret. */
+    var DB_BASE = 'https://sp-intelligence-fbbf9-default-rtdb.asia-southeast1.firebasedatabase.app';
+    var auth = null;
+    var db = null;
 
     var loginView = document.getElementById('login-view');
     var adminView = document.getElementById('admin-view');
@@ -367,14 +366,31 @@
     }
 
     /* ---------- Firebase boot ---------- */
-    if (typeof firebase === 'undefined') {
+    function bootFailed(message) {
         loginView.hidden = false;
-        showMsg(loginError, 'Firebase লোড হয়নি। ইন্টারনেট সংযোগ দেখে পাতাটি আবার লোড করুন।', 'err');
+        showMsg(loginError, message, 'err');
+    }
+    if (typeof firebase === 'undefined') {
+        bootFailed('Firebase লোড হয়নি। ইন্টারনেট সংযোগ দেখে পাতাটি আবার লোড করুন।');
         return;
     }
-    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-    var auth = firebase.auth();
-    var db = firebase.database();
+    fetch(DB_BASE + '/public/config.json', { cache: 'no-store' })
+        .then(function (res) {
+            if (!res.ok) { throw new Error('config HTTP ' + res.status); }
+            return res.json();
+        })
+        .then(function (cfg) {
+            if (!cfg || !cfg.apiKey || !cfg.databaseURL || !cfg.projectId) {
+                throw new Error('config incomplete');
+            }
+            if (!firebase.apps.length) { firebase.initializeApp(cfg); }
+            auth = firebase.auth();
+            db = firebase.database();
+            auth.onAuthStateChanged(onAuthChanged);
+        })
+        .catch(function () {
+            bootFailed('সার্ভারের সঙ্গে সংযোগ করা যায়নি। ইন্টারনেট সংযোগ দেখে পাতাটি আবার লোড করুন।');
+        });
 
     /* ---------- Section definitions ---------- */
     var FEEDS = [
@@ -435,6 +451,10 @@
     $('login-form').addEventListener('submit', function (ev) {
         ev.preventDefault();
         clearMsg(loginError);
+        if (!auth) {
+            showMsg(loginError, 'পাতাটি এখনো লোড হচ্ছে। কয়েক সেকেন্ড পরে আবার চেষ্টা করুন।', 'err');
+            return;
+        }
         var email = $('login-email').value.trim();
         var password = $('login-password').value;
         if (!email || !password) {
@@ -455,6 +475,7 @@
     });
 
     $('logout-btn').addEventListener('click', function () {
+        if (!auth) { return; }
         auth.signOut().catch(function (err) {
             showMsg(globalMsg, 'লগআউট করা যায়নি: ' + authErrorMessage(err), 'err');
         });
@@ -852,7 +873,7 @@
         ev.preventDefault();
         var msgEl = $('msg-password');
         clearMsg(msgEl);
-        var user = auth.currentUser;
+        var user = auth ? auth.currentUser : null;
         if (!user) {
             showMsg(msgEl, 'আগে লগইন করুন।', 'err');
             return;
@@ -894,7 +915,7 @@
     });
 
     /* ---------- Auth state: show login only, or the editors ---------- */
-    auth.onAuthStateChanged(function (user) {
+    function onAuthChanged(user) {
         if (user) {
             loginView.hidden = true;
             adminView.hidden = false;
@@ -909,7 +930,7 @@
             state = {};
             clearMsg(globalMsg);
         }
-    });
+    }
 })();
 </script>
 </body>
