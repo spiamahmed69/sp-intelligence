@@ -1,0 +1,6 @@
+# SP Intelligence — static site on Netlify.
+# No build step: the folder root is the publish directory.
+# Updates happen by replacing data/*.json and redeploying (git push -> auto-deploy).
+
+[build]
+  publish = "."
