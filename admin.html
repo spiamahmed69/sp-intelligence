@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অ্যাডমিন — এসপি ইন্টেলিজেন্স</title>
+<meta name="description" content="এসপি ইন্টেলিজেন্স অ্যাডমিন প্যানেল — খবর ও দৈনিক ব্রিফিং সম্পাদনা">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Hind+Siliguri:wght@500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563EB'/%3E%3Ctext x='32' y='44' font-size='30' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'%3ESP%3C/text%3E%3C/svg%3E">
+<style>
+  /* --- Admin-only styles (site tokens reused; nothing here overrides style.css) --- */
+  .admin-wrap { padding-bottom: 8px; }
+  .login-card { max-width: 480px; margin: 32px auto 0; }
+  .login-card h1 { font-size: 1.6rem; margin-bottom: 6px; }
+  .admin-bar {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.8); border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 20px;
+  }
+  .admin-bar .admin-user { font-weight: 700; margin: 0; overflow-wrap: anywhere; }
+  .admin-bar .btn { margin-left: auto; }
+  .form-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .form-field label { display: block; font-weight: 700; margin-bottom: 6px; }
+  .form-field label .req { color: #B91C1C; }
+  .form-field input, .form-field textarea, .form-field select {
+    width: 100%; min-height: 44px; padding: 10px 12px;
+    border: 1px solid var(--hairline); border-radius: 12px;
+    background: #FFFFFF; color: var(--ink); font: inherit; font-size: 1rem;
+  }
+  .form-field textarea { min-height: 88px; resize: vertical; line-height: 1.6; }
+  .form-field input[readonly] { background: #F1F5F9; color: var(--muted); }
+  .field-hint { font-size: 0.88rem; color: var(--muted); margin: 6px 0 0; }
+  .admin-section { margin-bottom: 24px; }
+  .admin-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .btn-danger {
+    background: #FEF2F2; border-color: #FECACA; color: #991B1B;
+  }
+  .btn-danger:hover { background: #FEE2E2; }
+  .entry-card {
+    border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.75); padding: 14px 16px; margin-bottom: 14px;
+  }
+  .entry-card summary {
+    cursor: pointer; min-height: 44px; display: flex; flex-wrap: wrap;
+    align-items: baseline; gap: 4px 12px; font-weight: 700; list-style: none;
+  }
+  .entry-card summary::-webkit-details-marker { display: none; }
+  .entry-card summary::before {
+    content: "▸"; color: var(--blue); font-weight: 800; flex: none;
+  }
+  .entry-card[open ] summary::before { content: "▾"; }
+  .entry-summary-meta { font-weight: 600; font-size: 0.88rem; color: var(--muted); }
+  .entry-card .form-grid { margin-top: 14px; }
+  .entry-card .btn-danger { margin-top: 14px; }
+  .sub-list { border-top: 1px dashed var(--hairline); margin-top: 16px; padding-top: 12px; }
+  .sub-list > h3 { font-size: 1.05rem; }
+  .sub-item {
+    border: 1px solid var(--hairline); border-radius: 12px;
+    background: #FFFFFF; padding: 12px; margin-bottom: 10px;
+  }
+  .sub-item .form-grid { gap: 10px; }
+  .admin-msg {
+    border-radius: 12px; padding: 12px 14px; margin: 14px 0 0; font-weight: 600;
+  }
+  .admin-msg:empty { display: none; }
+  .msg-ok { background: #DCFCE7; color: #065F46; border: 1px solid #86EFAC; }
+  .msg-err { background: #FEE2E2; color: #991B1B; border: 1px solid #FCA5A5; }
+  .msg-info { background: #DBEAFE; color: var(--blue-dark); border: 1px solid #93C5FD; }
+  .meta-box {
+    background: #EFF6FF; border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 16px;
+  }
+  .meta-box .field-hint { margin-bottom: 0; }
+  .login-note { color: var(--muted); }
+  @media (min-width: 640px) {
+    .form-grid.two-col { grid-template-columns: 1fr 1fr; }
+    .form-grid .span-2 { grid-column: span 2; }
+  }
+</style>
+</head>
+<body data-page="admin">
+<a class="skip-link" href="#main-content">মূল বিষয়বস্তুতে যান</a>
+
+<div class="shell">
+  <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+  <aside class="sidebar" id="sidebar" aria-label="মেনু">
+    <a class="sidebar-brand" href="index.html" aria-label="এসপি ইন্টেলিজেন্স">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="40" height="40" role="img" aria-label="SP monogram"><defs><linearGradient id="spg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset=".55" stop-color="#06B6D4"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#spg)"/><text x="32" y="43" font-size="30" font-family="Inter, Arial, sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle">SP</text></svg>
+      </span>
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-name">এসপি ইন্টেলিজেন্স</span>
+        <span class="sidebar-brand-tag">যাচাই করা খবর · সহজ বাংলায়</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav">
+      <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i><span>হোম</span></a>
+      <a href="10-ghonta.html"><i class="fa-solid fa-clock" aria-hidden="true"></i><span>১০ ঘণ্টার আপডেট</span></a>
+      <a href="4-ghonta.html"><i class="fa-solid fa-bolt" aria-hidden="true"></i><span>৪ ঘণ্টার আপডেট</span></a>
+      <a href="2-ghonta.html"><i class="fa-solid fa-stopwatch" aria-hidden="true"></i><span>২ ঘণ্টার আপডেট</span></a>
+      <a href="daily.html"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i><span>দৈনিক ব্রিফিং</span></a>
+      <a href="archive.html"><i class="fa-solid fa-box-archive" aria-hidden="true"></i><span>আর্কাইভ</span></a>
+      <a href="admin.html" class="active" aria-current="page"><i class="fa-solid fa-lock" aria-hidden="true"></i><span>অ্যাডমিন</span></a>
+    </nav>
+    <p class="sidebar-note">সব সময় বাংলাদেশ সময় (UTC+6) অনুযায়ী।</p>
+  </aside>
+  <div class="shell-main">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <button type="button" class="icon-btn sidebar-toggle" id="sidebar-toggle" aria-label="মেনু" aria-expanded="false" aria-controls="sidebar"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+        <p class="topbar-title">এসপি ইন্টেলিজেন্স</p>
+        <p class="topbar-clock">
+          <svg class="icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.6 4.2 2.5-.8 1.3L11 13.5V7h2z"/></svg>
+          <span>ঢাকার সময়</span>: <span id="dhaka-clock" data-clock>--:--</span>
+        </p>
+        <span class="lang-switch" role="group" aria-label="ভাষা">
+          <a href="index.html?lang=bn" class="active" lang="bn">বাংলা</a>
+          <span aria-hidden="true">|</span>
+          <a href="index.html?lang=en" lang="en">EN</a>
+        </span>
+      </div>
+    </div>
+<main id="main-content">
+<noscript><div class="container"><p class="empty-state">এই পাতাটি ব্যবহার করতে আপনার ব্রাউজারে JavaScript চালু করুন।</p></div></noscript>
+
+<!-- ============ লগইন (লগইন না করা থাকলে শুধু এটাই দেখা যাবে) ============ -->
+<div id="login-view" hidden>
+  <section class="section admin-wrap">
+    <div class="container">
+      <div class="card login-card">
+        <span class="section-kicker">অ্যাডমিন প্যানেল</span>
+        <h1>লগইন করুন</h1>
+        <p class="login-note">শুধু অ্যাডমিন এই পাতাটি ব্যবহার করতে পারবেন। আপনার অ্যাডমিন ইমেইল ও পাসওয়ার্ড দিন।</p>
+        <form id="login-form" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="login-email">ইমেইল <span class="req" aria-hidden="true">*</span></label>
+              <input type="email" id="login-email" name="email" autocomplete="username" placeholder="আপনার ইমেইল" required>
+            </div>
+            <div class="form-field">
+              <label for="login-password">পাসওয়ার্ড <span class="req" aria-hidden="true">*</span></label>
+              <input type="password" id="login-password" name="password" autocomplete="current-password" placeholder="পাসওয়ার্ড" required>
+            </div>
+          </div>
+          <p class="admin-msg msg-err" id="login-error" role="alert" hidden></p>
+          <div class="admin-actions">
+            <button type="submit" class="btn btn-primary" id="login-submit">লগইন করুন</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ অ্যাডমিন প্যানেল (লগইনের পর) ============ -->
+<div id="admin-view" hidden>
+  <section class="dash-head">
+    <div class="container">
+      <span class="section-kicker">অ্যাডমিন প্যানেল</span>
+      <h1>খবর ও ব্রিফিং সম্পাদনা</h1>
+      <p class="dash-date">ডেটাবেস থেকে বর্তমান তথ্য লোড হয় — কোনো খবর আগে থেকে বানানো হয় না।</p>
+    </div>
+  </section>
+
+  <section class="section admin-wrap">
+    <div class="container">
+      <div class="admin-bar">
+        <p class="admin-user">লগইন করা আছে: <span id="admin-email">—</span></p>
+        <button type="button" class="btn btn-outline btn-small" id="logout-btn">লগআউট</button>
+      </div>
+      <p class="admin-msg msg-info" id="global-msg" role="status" aria-live="polite"></p>
+
+      <!-- ১০ ঘণ্টা -->
+      <article class="card admin-section" aria-labelledby="h-10h">
+        <div class="section-head-row">
+          <h2 id="h-10h">১০ ঘণ্টার আপডেট</h2>
+          <span class="count-chip" id="count-10h"></span>
+        </div>
+        <p class="section-intro">গত ১০ ঘণ্টার খবর। সংরক্ষণ করলে সর্বশেষ আপডেটের সময় ঢাকার বর্তমান সময়ে বসবে।</p>
+        <div id="editor-10h"><p class="empty-state">লোড হচ্ছে…</p></div>
+        <div class="admin-actions">
+          <button type="button" class="btn btn-outline" data-add="10h">নতুন খবর যোগ করুন</button>
+          <button type="button" class="btn btn-primary" data-save="10h">সংরক্ষণ করুন</button>
+        </div>
+        <p class="admin-msg" id="msg-10h" role="status" aria-live="polite"></p>
+      </article>
+
+      <!-- ৪ ঘণ্টা -->
+      <article class="card admin-section" aria-labelledby="h-4h">
+        <div class="section-head-row">
+          <h2 id="h-4h">৪ ঘণ্টার আপডেট</h2>
+          <span class="count-chip" id="count-4h"></span>
+        </div>
+        <p class="section-intro">গত ৪ ঘণ্টার সংক্ষিপ্ত খবর। সংরক্ষণ করলে সর্বশেষ আপডেটের সময় ঢাকার বর্তমান সময়ে বসবে।</p>
+        <div id="editor-4h"><p class="empty-state">লোড হচ্ছে…</p></div>
+        <div class="admin-actions">
+          <button type="button" class="btn btn-outline" data-add="4h">নতুন খবর যোগ করুন</button>
+          <button type="button" class="btn btn-primary" data-save="4h">সংরক্ষণ করুন</button>
+        </div>
+        <p class="admin-msg" id="msg-4h" role="status" aria-live="polite"></p>
+      </article>
+
+      <!-- ২ ঘণ্টা -->
+      <article class="card admin-section" aria-labelledby="h-2h">
+        <div class="section-head-row">
+          <h2 id="h-2h">২ ঘণ্টার আপডেট</h2>
+          <span class="count-chip" id="count-2h"></span>
+        </div>
+        <p class="section-intro">গত ২ ঘণ্টার সংক্ষিপ্ত খবর। সংরক্ষণ করলে সর্বশেষ আপডেটের সময় ঢাকার বর্তমান সময়ে বসবে।</p>
+        <div id="editor-2h"><p class="empty-state">লোড হচ্ছে…</p></div>
+        <div class="admin-actions">
+          <button type="button" class="btn btn-outline" data-add="2h">নতুন খবর যোগ করুন</button>
+          <button type="button" class="btn btn-primary" data-save="2h">সংরক্ষণ করুন</button>
+        </div>
+        <p class="admin-msg" id="msg-2h" role="status" aria-live="polite"></p>
+      </article>
+
+      <!-- দৈনিক ব্রিফিং -->
+      <article class="card admin-section" aria-labelledby="h-daily">
+        <div class="section-head-row">
+          <h2 id="h-daily">দৈনিক ব্রিফিং</h2>
+          <span class="count-chip" id="count-daily"></span>
+        </div>
+        <p class="section-intro">প্রতিদিন সকাল ১০টার ব্রিফিং — বিশেষ ৫টি খবর, সারসংক্ষেপ, সামনের তারিখ ও ইসলামিক জ্ঞান।</p>
+        <div id="editor-daily"><p class="empty-state">লোড হচ্ছে…</p></div>
+        <div class="admin-actions">
+          <button type="button" class="btn btn-outline" data-add="daily">নতুন ব্রিফিং যোগ করুন</button>
+          <button type="button" class="btn btn-primary" data-save="daily">সংরক্ষণ করুন</button>
+        </div>
+        <p class="admin-msg" id="msg-daily" role="status" aria-live="polite"></p>
+      </article>
+
+      <!-- পাসওয়ার্ড পরিবর্তন -->
+      <article class="card admin-section" aria-labelledby="h-password">
+        <h2 id="h-password">পাসওয়ার্ড পরিবর্তন</h2>
+        <p class="section-intro">নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে। পরিবর্তনের পর পরের বার নতুন পাসওয়ার্ড দিয়ে লগইন করতে হবে।</p>
+        <form id="password-form" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="pw-current">বর্তমান পাসওয়ার্ড <span class="req" aria-hidden="true">*</span></label>
+              <input type="password" id="pw-current" autocomplete="current-password" placeholder="বর্তমান পাসওয়ার্ড" required>
+            </div>
+            <div class="form-field">
+              <label for="pw-new">নতুন পাসওয়ার্ড <span class="req" aria-hidden="true">*</span></label>
+              <input type="password" id="pw-new" autocomplete="new-password" placeholder="কমপক্ষে ৬ অক্ষর" minlength="6" required>
+            </div>
+            <div class="form-field">
+              <label for="pw-confirm">নতুন পাসওয়ার্ড আবার লিখুন <span class="req" aria-hidden="true">*</span></label>
+              <input type="password" id="pw-confirm" autocomplete="new-password" placeholder="নতুন পাসওয়ার্ড আবার লিখুন" minlength="6" required>
+            </div>
+          </div>
+          <div class="admin-actions">
+            <button type="submit" class="btn btn-primary" id="pw-submit">পাসওয়ার্ড পরিবর্তন করুন</button>
+          </div>
+          <p class="admin-msg" id="msg-password" role="status" aria-live="polite"></p>
+        </form>
+      </article>
+    </div>
+  </section>
+</div>
+
+</main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© <span id="footer-year">2026</span> এসপি ইন্টেলিজেন্স</p>
+        <p class="footer-honesty">এই সাইটে কোনো বানানো খবর, ভুয়া তথ্য বা গুজব প্রকাশ করা হয় না। কোনো বিষয়ে নতুন তথ্য না থাকলে সেটি স্পষ্টভাবে জানানো হয়। প্রতিটি গুরুত্বপূর্ণ খবরের সঙ্গে প্রকাশের তারিখ ও মূল সূত্রের লিংক থাকে।</p>
+        <p class="footer-note">সব সময় বাংলাদেশ সময় (UTC+6) অনুযায়ী।</p>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<nav class="bottom-nav" aria-label="মেনু">
+  <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i><span>হোম</span></a>
+  <a href="10-ghonta.html"><i class="fa-solid fa-clock" aria-hidden="true"></i><span>১০ ঘণ্টার আপডেট</span></a>
+  <a href="4-ghonta.html"><i class="fa-solid fa-bolt" aria-hidden="true"></i><span>৪ ঘণ্টার আপডেট</span></a>
+  <a href="2-ghonta.html"><i class="fa-solid fa-stopwatch" aria-hidden="true"></i><span>২ ঘণ্টার আপডেট</span></a>
+  <a href="daily.html"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i><span>দৈনিক ব্রিফিং</span></a>
+</nav>
+
+<button type="button" class="back-to-top" id="back-to-top" aria-label="উপরে যান" hidden>
+  <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+</button>
+
+<script src="assets/js/main.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+/* SP Intelligence — admin.html
+ * Firebase Auth (Email/Password) + Realtime Database editor.
+ * Reads/writes /news/10h, /news/4h, /news/2h, /news/daily.
+ * No news data is invented or seeded here — editors start from whatever
+ * is actually in the database. Only the public web config below is used.
+ */
+(function () {
+    'use strict';
+
+    var firebaseConfig = {
+      apiKey: "AIzaSyDjoyToSSpQJhUjFyFN3vnpL5bNU3KQaD4",
+      authDomain: "sp-intelligence-fbbf9.firebaseapp.com",
+      databaseURL: "https://sp-intelligence-fbbf9-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "sp-intelligence-fbbf9",
+      storageBucket: "sp-intelligence-fbbf9.firebasestorage.app",
+      messagingSenderId: "774924786257",
+      appId: "1:774924786257:web:ff4eb0d0dd974c02503670"
+    };
+
+    var loginView = document.getElementById('login-view');
+    var adminView = document.getElementById('admin-view');
+    var loginError = document.getElementById('login-error');
+    var globalMsg = document.getElementById('global-msg');
+    var yearEl = document.getElementById('footer-year');
+    if (yearEl) { yearEl.textContent = String(new Date().getFullYear()); }
+
+    function $(id) { return document.getElementById(id); }
+
+    function esc(s) {
+        return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    }
+
+    function showMsg(el, text, kind) {
+        if (!el) { return; }
+        el.textContent = text;
+        el.className = 'admin-msg' + (kind ? ' msg-' + kind : '');
+        el.hidden = false;
+    }
+    function clearMsg(el) {
+        if (!el) { return; }
+        el.textContent = '';
+        el.className = 'admin-msg';
+        el.hidden = true;
+    }
+
+    /* ---------- Dhaka time helpers ---------- */
+    function dhakaPartsNow() {
+        var fmt = new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Asia/Dhaka', year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+        });
+        var p = {};
+        fmt.formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+        var h = parseInt(p.hour, 10) % 24;
+        return { y: p.year, mo: p.month, d: p.day, h: (h < 10 ? '0' : '') + h, mi: p.minute, s: p.second };
+    }
+    // "2026-11-23T13:28:00+06:00" — current Dhaka wall-clock time.
+    function dhakaISO() {
+        var q = dhakaPartsNow();
+        return q.y + '-' + q.mo + '-' + q.d + 'T' + q.h + ':' + q.mi + ':' + q.s + '+06:00';
+    }
+    function dhakaDate() {
+        var q = dhakaPartsNow();
+        return q.y + '-' + q.mo + '-' + q.d;
+    }
+    function newId(prefix) {
+        var q = dhakaPartsNow();
+        var rnd = Math.floor(Math.random() * 90) + 10;
+        return prefix + '-' + q.y + q.mo + q.d + '-' + q.h + q.mi + rnd;
+    }
+
+    /* ---------- Firebase boot ---------- */
+    if (typeof firebase === 'undefined') {
+        loginView.hidden = false;
+        showMsg(loginError, 'Firebase লোড হয়নি। ইন্টারনেট সংযোগ দেখে পাতাটি আবার লোড করুন।', 'err');
+        return;
+    }
+    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+    var auth = firebase.auth();
+    var db = firebase.database();
+
+    /* ---------- Section definitions ---------- */
+    var FEEDS = [
+        { key: '10h', title: '১০ ঘণ্টার আপডেট', interval: 10, windowLabel: 'গত ১০ ঘণ্টা', unit: 'টি খবর' },
+        { key: '4h', title: '৪ ঘণ্টার আপডেট', interval: 4, windowLabel: 'গত ৪ ঘণ্টা', unit: 'টি খবর' },
+        { key: '2h', title: '২ ঘণ্টার আপডেট', interval: 2, windowLabel: 'গত ২ ঘণ্টা', unit: 'টি খবর' }
+    ];
+    var BN_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    function bnDigits(s) {
+        return String(s).replace(/[0-9]/g, function (d) { return BN_DIGITS[+d]; });
+    }
+
+    // state[key] = { meta, entries } for feeds, { meta, briefings } for daily.
+    var state = {};
+    var dataLoaded = false;
+
+    function blankEntry(feed) {
+        return {
+            id: newId(feed.key), category: '', title: '', summary: '',
+            why_it_matters: '', published_at: dhakaISO(), published_date: dhakaDate(),
+            source_name: '', source_url: '', window: feed.windowLabel
+        };
+    }
+    function blankBriefing() {
+        return {
+            id: newId('daily'), date: dhakaDate(), published_at: dhakaISO(),
+            summary: '', top5: [], upcoming: [], islamic_note: ''
+        };
+    }
+    function blankTop5() { return { title: '', summary: '' }; }
+    function blankUpcoming() { return { date: dhakaDate(), text: '' }; }
+
+    /* ---------- Auth ---------- */
+    function authErrorMessage(err) {
+        var code = (err && err.code) || '';
+        if (code === 'auth/invalid-email') { return 'ইমেইল ঠিকানাটি সঠিক নয়।'; }
+        if (code === 'auth/user-disabled') { return 'এই অ্যাকাউন্টটি বন্ধ করা আছে।'; }
+        if (code === 'auth/user-not-found') { return 'এই ইমেইলে কোনো অ্যাকাউন্ট পাওয়া যায়নি।'; }
+        if (code === 'auth/wrong-password' || code === 'auth/invalid-credential') {
+            return 'ইমেইল বা পাসওয়ার্ড ভুল হয়েছে। আবার চেষ্টা করুন।';
+        }
+        if (code === 'auth/too-many-requests') {
+            return 'অনেকবার ভুল চেষ্টা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।';
+        }
+        if (code === 'auth/network-request-failed') {
+            return 'ইন্টারনেট সংযোগে সমস্যা হয়েছে। সংযোগ দেখে আবার চেষ্টা করুন।';
+        }
+        if (code === 'auth/requires-recent-login') {
+            return 'নিরাপত্তার জন্য আবার লগইন করে চেষ্টা করুন।';
+        }
+        if (code === 'auth/weak-password') {
+            return 'পাসওয়ার্ড খুব দুর্বল। কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড দিন।';
+        }
+        return 'কিছু একটা ভুল হয়েছে। আবার চেষ্টা করুন।' +
+            (err && err.message ? ' (' + err.message + ')' : '');
+    }
+
+    $('login-form').addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        clearMsg(loginError);
+        var email = $('login-email').value.trim();
+        var password = $('login-password').value;
+        if (!email || !password) {
+            showMsg(loginError, 'ইমেইল ও পাসওয়ার্ড — দুটোই দিন।', 'err');
+            return;
+        }
+        var btn = $('login-submit');
+        btn.disabled = true;
+        btn.textContent = 'লগইন হচ্ছে…';
+        auth.signInWithEmailAndPassword(email, password).then(function () {
+            // onAuthStateChanged takes over from here.
+        }).catch(function (err) {
+            showMsg(loginError, authErrorMessage(err), 'err');
+        }).finally(function () {
+            btn.disabled = false;
+            btn.textContent = 'লগইন করুন';
+        });
+    });
+
+    $('logout-btn').addEventListener('click', function () {
+        auth.signOut().catch(function (err) {
+            showMsg(globalMsg, 'লগআউট করা যায়নি: ' + authErrorMessage(err), 'err');
+        });
+    });
+
+    /* ---------- Load all four sections from the database ---------- */
+    function loadAll() {
+        showMsg(globalMsg, 'ডেটাবেস থেকে তথ্য লোড হচ্ছে…', 'info');
+        var keys = ['10h', '4h', '2h', 'daily'];
+        var jobs = keys.map(function (key) {
+            return db.ref('news/' + key).once('value').then(function (snap) {
+                return { key: key, data: snap.val() };
+            });
+        });
+        Promise.all(jobs).then(function (results) {
+            results.forEach(function (r) {
+                var d = r.data || {};
+                if (r.key === 'daily') {
+                    state.daily = {
+                        meta: (d.meta && typeof d.meta === 'object') ? d.meta : { section: 'daily', timezone: 'Asia/Dhaka' },
+                        briefings: Array.isArray(d.briefings) ? d.briefings : []
+                    };
+                } else {
+                    var feed = FEEDS.filter(function (f) { return f.key === r.key; })[0];
+                    state[r.key] = {
+                        meta: (d.meta && typeof d.meta === 'object') ? d.meta : { section: r.key, interval_hours: feed.interval, timezone: 'Asia/Dhaka' },
+                        entries: Array.isArray(d.entries) ? d.entries : []
+                    };
+                }
+            });
+            dataLoaded = true;
+            FEEDS.forEach(function (f) { renderFeed(f.key); });
+            renderDaily();
+            clearMsg(globalMsg);
+        }).catch(function (err) {
+            showMsg(globalMsg, 'তথ্য লোড করা যায়নি: ' + authErrorMessage(err), 'err');
+        });
+    }
+
+    /* ---------- Feed editors (10h / 4h / 2h) ---------- */
+    function feedDef(key) {
+        return FEEDS.filter(function (f) { return f.key === key; })[0];
+    }
+
+    function entryFieldsHTML(feed, e, i) {
+        var p = feed.key + '-' + i + '-';
+        function field(name, label, type, val, opts) {
+            opts = opts || {};
+            var input;
+            if (opts.textarea) {
+                input = '<textarea id="' + p + name + '" data-field="' + name + '"' +
+                    (opts.rows ? ' rows="' + opts.rows + '"' : '') + '>' + esc(val) + '</textarea>';
+            } else {
+                input = '<input type="' + type + '" id="' + p + name + '" data-field="' + name +
+                    '" value="' + esc(val) + '"' + (opts.placeholder ? ' placeholder="' + esc(opts.placeholder) + '"' : '') + '>';
+            }
+            return '<div class="form-field' + (opts.span ? ' span-2' : '') + '">' +
+                '<label for="' + p + name + '">' + label +
+                (opts.req ? ' <span class="req" aria-hidden="true">*</span>' : '') + '</label>' + input +
+                (opts.hint ? '<p class="field-hint">' + opts.hint + '</p>' : '') + '</div>';
+        }
+        return '<div class="form-grid two-col">' +
+            field('id', 'আইডি (id)', 'text', e.id || '', { req: true, hint: 'প্রতিটি খবরের আলাদা আইডি থাকতে হবে।' }) +
+            field('category', 'বিভাগ (category)', 'text', e.category || '', { placeholder: 'যেমন: বাংলাদেশ, খেলা, অর্থনীতি' }) +
+            field('title', 'শিরোনাম (title)', 'text', e.title || '', { req: true, span: true }) +
+            field('summary', 'সারসংক্ষেপ (summary)', 'text', e.summary || '', { textarea: true, span: true, rows: 3 }) +
+            field('why_it_matters', 'কেন গুরুত্বপূর্ণ (why_it_matters)', 'text', e.why_it_matters || '', { textarea: true, span: true, rows: 2 }) +
+            field('published_at', 'প্রকাশের সময় (published_at)', 'text', e.published_at || '', { placeholder: '2026-11-23T09:35:00+06:00' }) +
+            field('published_date', 'প্রকাশের তারিখ (published_date)', 'date', e.published_date || '') +
+            field('source_name', 'সূত্রের নাম (source_name)', 'text', e.source_name || '', { placeholder: 'যেমন: Dawn, TBS' }) +
+            field('source_url', 'সূত্রের লিংক (source_url)', 'url', e.source_url || '', { placeholder: 'https://…' }) +
+            field('window', 'সময়সীমা (window)', 'text', e.window || '', {}) +
+            '</div>';
+    }
+
+    function renderFeed(key, openIndex) {
+        var feed = feedDef(key);
+        var s = state[key];
+        var wrap = $('editor-' + key);
+        var countEl = $('count-' + key);
+        if (!s) { return; }
+        if (countEl) { countEl.textContent = bnDigits(s.entries.length) + ' ' + feed.unit; }
+        var html = '<div class="meta-box"><div class="form-field">' +
+            '<label for="meta-note-' + key + '">সেকশনের নোট (meta.note_bn)</label>' +
+            '<textarea id="meta-note-' + key + '" data-meta-note rows="3">' + esc(s.meta.note_bn || '') + '</textarea>' +
+            '<p class="field-hint">এই নোট সাইটে দেখানো হয় না; শুধু এই আপডেট সম্পর্কে আপনার নিজের মন্তব্য। interval_hours ও section এখানে বদলানো যায় না।</p>' +
+            '</div></div>';
+        if (!s.entries.length) {
+            html += '<p class="empty-state">এই সেকশনে এখনো কোনো খবর নেই। নিচের “নতুন খবর যোগ করুন” বোতামে খবর যোগ করে সংরক্ষণ করুন।</p>';
+        } else {
+            html += s.entries.map(function (e, i) {
+                var title = (e.title || '').trim() || 'নতুন খবর';
+                var metaBits = [];
+                if (e.category) { metaBits.push(e.category); }
+                if (e.published_at) { metaBits.push(e.published_at); }
+                return '<details class="entry-card" data-entry-index="' + i + '"' +
+                    (openIndex === i ? ' open' : '') + '>' +
+                    '<summary><span>' + esc(title) + '</span>' +
+                    (metaBits.length ? '<span class="entry-summary-meta">' + esc(metaBits.join(' · ')) + '</span>' : '') +
+                    '</summary>' +
+                    entryFieldsHTML(feed, e, i) +
+                    '<button type="button" class="btn btn-outline btn-small btn-danger" data-delete-entry="' + key + ':' + i + '">এই খবরটি মুছুন</button>' +
+                    '<p class="field-hint">মুছলে তালিকা থেকে এখনই সরে যাবে; ডেটাবেস থেকে স্থায়ীভাবে মুছতে সংরক্ষণ করুন।</p>' +
+                    '</details>';
+            }).join('');
+        }
+        wrap.innerHTML = html;
+    }
+
+    function syncFeed(key) {
+        var s = state[key];
+        var wrap = $('editor-' + key);
+        var noteEl = wrap.querySelector('[data-meta-note]');
+        if (noteEl) { s.meta.note_bn = noteEl.value.trim(); }
+        var entries = [];
+        wrap.querySelectorAll('[data-entry-index]').forEach(function (card) {
+            var e = {};
+            card.querySelectorAll('[data-field]').forEach(function (inp) {
+                e[inp.getAttribute('data-field')] = inp.value.trim();
+            });
+            entries.push(e);
+        });
+        s.entries = entries;
+    }
+
+    function validateFeed(key) {
+        var s = state[key];
+        var seen = {};
+        for (var i = 0; i < s.entries.length; i++) {
+            var e = s.entries[i];
+            if (!e.id) { return 'খবর ' + bnDigits(i + 1) + ': আইডি (id) দিতে হবে।'; }
+            if (seen[e.id]) { return 'আইডি “' + e.id + '” দুইবার আছে — প্রতিটি খবরের আলাদা আইডি দিন।'; }
+            seen[e.id] = true;
+            if (!e.title) { return 'খবর ' + bnDigits(i + 1) + ': শিরোনাম (title) দিতে হবে।'; }
+        }
+        return '';
+    }
+
+    function saveFeed(key) {
+        var feed = feedDef(key);
+        var msgEl = $('msg-' + key);
+        syncFeed(key);
+        var err = validateFeed(key);
+        if (err) { showMsg(msgEl, err, 'err'); return; }
+        var s = state[key];
+        // meta.interval_hours ও meta.section অপরিবর্তিত থাকে; শুধু note_bn ও last_updated বদলায়।
+        s.meta.last_updated = dhakaISO();
+        var payload = { meta: s.meta, entries: s.entries };
+        showMsg(msgEl, 'সংরক্ষণ হচ্ছে…', 'info');
+        db.ref('news/' + key).set(payload).then(function () {
+            showMsg(msgEl, 'সংরক্ষণ হয়েছে — ' + feed.title + ' আপডেট করা হয়েছে (' + s.entries.length + 'টি খবর)।', 'ok');
+        }).catch(function (e) {
+            showMsg(msgEl, 'সংরক্ষণ হয়নি: ' + authErrorMessage(e), 'err');
+        });
+    }
+
+    /* ---------- Daily editor ---------- */
+    function top5HTML(b, bi, item, ti) {
+        var p = 'daily-' + bi + '-top5-' + ti + '-';
+        return '<div class="sub-item" data-top5-item="' + ti + '">' +
+            '<div class="form-grid">' +
+            '<div class="form-field"><label for="' + p + 'title">শিরোনাম <span class="req" aria-hidden="true">*</span></label>' +
+            '<input type="text" id="' + p + 'title" data-field="title" value="' + esc(item.title || '') + '"></div>' +
+            '<div class="form-field"><label for="' + p + 'summary">সারসংক্ষেপ</label>' +
+            '<textarea id="' + p + 'summary" data-field="summary" rows="2">' + esc(item.summary || '') + '</textarea></div>' +
+            '</div>' +
+            '<button type="button" class="btn btn-outline btn-small btn-danger" data-delete-top5="' + bi + ':' + ti + '">এটি সরান</button>' +
+            '</div>';
+    }
+
+    function upcomingHTML(b, bi, item, ui) {
+        var p = 'daily-' + bi + '-up-' + ui + '-';
+        return '<div class="sub-item" data-upcoming-item="' + ui + '">' +
+            '<div class="form-grid two-col">' +
+            '<div class="form-field"><label for="' + p + 'date">তারিখ</label>' +
+            '<input type="date" id="' + p + 'date" data-field="date" value="' + esc(item.date || '') + '"></div>' +
+            '<div class="form-field"><label for="' + p + 'text">বিবরণ <span class="req" aria-hidden="true">*</span></label>' +
+            '<input type="text" id="' + p + 'text" data-field="text" value="' + esc(item.text || '') + '"></div>' +
+            '</div>' +
+            '<button type="button" class="btn btn-outline btn-small btn-danger" data-delete-upcoming="' + bi + ':' + ui + '">এটি সরান</button>' +
+            '</div>';
+    }
+
+    function briefingFieldsHTML(b, bi) {
+        var p = 'daily-' + bi + '-';
+        function field(name, label, type, val, opts) {
+            opts = opts || {};
+            var input;
+            if (opts.textarea) {
+                input = '<textarea id="' + p + name + '" data-field="' + name + '" rows="' + (opts.rows || 3) + '">' + esc(val) + '</textarea>';
+            } else {
+                input = '<input type="' + type + '" id="' + p + name + '" data-field="' + name + '" value="' + esc(val) + '"' +
+                    (opts.placeholder ? ' placeholder="' + esc(opts.placeholder) + '"' : '') + '>';
+            }
+            return '<div class="form-field' + (opts.span ? ' span-2' : '') + '">' +
+                '<label for="' + p + name + '">' + label +
+                (opts.req ? ' <span class="req" aria-hidden="true">*</span>' : '') + '</label>' + input +
+                (opts.hint ? '<p class="field-hint">' + opts.hint + '</p>' : '') + '</div>';
+        }
+        return '<div class="briefing-fields"><div class="form-grid two-col">' +
+            field('id', 'আইডি (id)', 'text', b.id || '', { req: true }) +
+            field('date', 'তারিখ (date)', 'date', b.date || '', { req: true }) +
+            field('published_at', 'প্রকাশের সময় (published_at)', 'text', b.published_at || '', { placeholder: '2026-11-23T10:00:00+06:00', span: true }) +
+            field('summary', 'সারসংক্ষেপ (summary)', 'text', b.summary || '', { textarea: true, span: true, rows: 3 }) +
+            field('islamic_note', 'ইসলামিক জ্ঞান (islamic_note)', 'text', b.islamic_note || '', { textarea: true, span: true, rows: 2 }) +
+            '</div></div>';
+    }
+
+    function renderDaily(openIndex) {
+        var s = state.daily;
+        var wrap = $('editor-daily');
+        var countEl = $('count-daily');
+        if (!s) { return; }
+        if (countEl) { countEl.textContent = bnDigits(s.briefings.length) + ' টি ব্রিফিং'; }
+        if (!s.briefings.length) {
+            wrap.innerHTML = '<p class="empty-state">এখনো কোনো দৈনিক ব্রিফিং নেই। নিচের “নতুন ব্রিফিং যোগ করুন” বোতামে ব্রিফিং যোগ করে সংরক্ষণ করুন।</p>';
+            return;
+        }
+        wrap.innerHTML = s.briefings.map(function (b, bi) {
+            var top5 = Array.isArray(b.top5) ? b.top5 : [];
+            var upcoming = Array.isArray(b.upcoming) ? b.upcoming : [];
+            var title = (b.date || '').trim() || (b.id || '').trim() || 'নতুন ব্রিফিং';
+            var html = '<details class="entry-card" data-briefing-index="' + bi + '"' +
+                (openIndex === bi ? ' open' : '') + '>' +
+                '<summary><span>ব্রিফিং: ' + esc(title) + '</span>' +
+                '<span class="entry-summary-meta">' + bnDigits(top5.length) + '/৫টি বিশেষ আপডেট</span></summary>' +
+                briefingFieldsHTML(b, bi);
+            html += '<div class="sub-list"><h3>আজকের বিশেষ ৫টি আপডেট (top5) — সর্বোচ্চ ৫টি</h3>';
+            html += top5.map(function (item, ti) { return top5HTML(b, bi, item, ti); }).join('');
+            if (top5.length < 5) {
+                html += '<button type="button" class="btn btn-outline btn-small" data-add-top5="' + bi + '">বিশেষ আপডেট যোগ করুন</button>';
+            } else {
+                html += '<p class="field-hint">সর্বোচ্চ ৫টি হয়ে গেছে। নতুন যোগ করতে আগে একটি সরান।</p>';
+            }
+            html += '</div>';
+            html += '<div class="sub-list"><h3>সামনে যেসব তারিখ গুরুত্বপূর্ণ (upcoming)</h3>';
+            html += upcoming.map(function (item, ui) { return upcomingHTML(b, bi, item, ui); }).join('');
+            html += '<button type="button" class="btn btn-outline btn-small" data-add-upcoming="' + bi + '">তারিখ যোগ করুন</button>';
+            html += '</div>';
+            html += '<button type="button" class="btn btn-outline btn-small btn-danger" data-delete-briefing="' + bi + '">এই ব্রিফিংটি মুছুন</button>' +
+                '<p class="field-hint">মুছলে তালিকা থেকে এখনই সরে যাবে; ডেটাবেস থেকে স্থায়ীভাবে মুছতে সংরক্ষণ করুন।</p>' +
+                '</details>';
+            return html;
+        }).join('');
+    }
+
+    function syncDaily() {
+        var s = state.daily;
+        var wrap = $('editor-daily');
+        var briefings = [];
+        wrap.querySelectorAll('[data-briefing-index]').forEach(function (card) {
+            var b = {};
+            card.querySelector('.briefing-fields').querySelectorAll('[data-field]').forEach(function (inp) {
+                b[inp.getAttribute('data-field')] = inp.value.trim();
+            });
+            b.top5 = [];
+            card.querySelectorAll('[data-top5-item]').forEach(function (item) {
+                var t = {};
+                item.querySelectorAll('[data-field]').forEach(function (inp) {
+                    t[inp.getAttribute('data-field')] = inp.value.trim();
+                });
+                b.top5.push(t);
+            });
+            b.upcoming = [];
+            card.querySelectorAll('[data-upcoming-item]').forEach(function (item) {
+                var u = {};
+                item.querySelectorAll('[data-field]').forEach(function (inp) {
+                    u[inp.getAttribute('data-field')] = inp.value.trim();
+                });
+                b.upcoming.push(u);
+            });
+            briefings.push(b);
+        });
+        s.briefings = briefings;
+    }
+
+    function validateDaily() {
+        var s = state.daily;
+        var seen = {};
+        for (var i = 0; i < s.briefings.length; i++) {
+            var b = s.briefings[i];
+            if (!b.id) { return 'ব্রিফিং ' + bnDigits(i + 1) + ': আইডি (id) দিতে হবে।'; }
+            if (seen[b.id]) { return 'আইডি “' + b.id + '” দুইবার আছে — প্রতিটি ব্রিফিংয়ের আলাদা আইডি দিন।'; }
+            seen[b.id] = true;
+            if (!b.date) { return 'ব্রিফিং ' + bnDigits(i + 1) + ': তারিখ (date) দিতে হবে।'; }
+            if (b.top5.length > 5) { return 'ব্রিফিং ' + bnDigits(i + 1) + ': বিশেষ আপডেট (top5) সর্বোচ্চ ৫টি হতে পারে।'; }
+            for (var j = 0; j < b.top5.length; j++) {
+                if (!b.top5[j].title) { return 'ব্রিফিং ' + bnDigits(i + 1) + ': বিশেষ আপডেট ' + bnDigits(j + 1) + '-এর শিরোনাম দিতে হবে।'; }
+            }
+            for (var k = 0; k < b.upcoming.length; k++) {
+                if (!b.upcoming[k].text) { return 'ব্রিফিং ' + bnDigits(i + 1) + ': সামনের তারিখ ' + bnDigits(k + 1) + '-এর বিবরণ দিতে হবে।'; }
+            }
+        }
+        return '';
+    }
+
+    function saveDaily() {
+        var msgEl = $('msg-daily');
+        syncDaily();
+        var err = validateDaily();
+        if (err) { showMsg(msgEl, err, 'err'); return; }
+        var s = state.daily;
+        // meta অপরিবর্তিত থাকে।
+        var payload = { meta: s.meta, briefings: s.briefings };
+        showMsg(msgEl, 'সংরক্ষণ হচ্ছে…', 'info');
+        db.ref('news/daily').set(payload).then(function () {
+            showMsg(msgEl, 'সংরক্ষণ হয়েছে — দৈনিক ব্রিফিং আপডেট করা হয়েছে (' + s.briefings.length + 'টি ব্রিফিং)।', 'ok');
+        }).catch(function (e) {
+            showMsg(msgEl, 'সংরক্ষণ হয়নি: ' + authErrorMessage(e), 'err');
+        });
+    }
+
+    /* ---------- Add / delete / save — one delegated handler ---------- */
+    document.addEventListener('click', function (ev) {
+        var btn = ev.target.closest('button[data-add], button[data-save], button[data-delete-entry], button[data-delete-briefing], button[data-add-top5], button[data-add-upcoming], button[data-delete-top5], button[data-delete-upcoming]');
+        if (!btn) { return; }
+        if (btn.hasAttribute('data-save')) {
+            var saveKey = btn.getAttribute('data-save');
+            if (saveKey === 'daily') { saveDaily(); } else { saveFeed(saveKey); }
+            return;
+        }
+        if (!dataLoaded) { return; }
+        if (btn.hasAttribute('data-add')) {
+            var addKey = btn.getAttribute('data-add');
+            if (addKey === 'daily') {
+                syncDaily();
+                state.daily.briefings.unshift(blankBriefing());
+                renderDaily(0);
+                showMsg($('msg-daily'), 'নতুন ব্রিফিং যোগ হয়েছে — তথ্য লিখে সংরক্ষণ করুন।', 'info');
+            } else {
+                syncFeed(addKey);
+                state[addKey].entries.unshift(blankEntry(feedDef(addKey)));
+                renderFeed(addKey, 0);
+                showMsg($('msg-' + addKey), 'নতুন খবর যোগ হয়েছে — তথ্য লিখে সংরক্ষণ করুন।', 'info');
+            }
+            return;
+        }
+        if (btn.hasAttribute('data-delete-entry')) {
+            var parts = btn.getAttribute('data-delete-entry').split(':');
+            var key = parts[0], idx = parseInt(parts[1], 10);
+            var title = (state[key].entries[idx] && state[key].entries[idx].title) || '';
+            if (!window.confirm('এই খবরটি মুছে ফেলবেন?\n' + (title ? '“' + title + '”\n' : '') + 'সংরক্ষণ করলে ডেটাবেস থেকে স্থায়ীভাবে মুছে যাবে।')) { return; }
+            syncFeed(key);
+            state[key].entries.splice(idx, 1);
+            renderFeed(key);
+            showMsg($('msg-' + key), 'খবরটি তালিকা থেকে সরানো হয়েছে — স্থায়ীভাবে মুছতে সংরক্ষণ করুন।', 'info');
+            return;
+        }
+        if (btn.hasAttribute('data-delete-briefing')) {
+            var bi = parseInt(btn.getAttribute('data-delete-briefing'), 10);
+            var bTitle = (state.daily.briefings[bi] && state.daily.briefings[bi].date) || '';
+            if (!window.confirm('এই ব্রিফিংটি মুছে ফেলবেন?' + (bTitle ? '\nতারিখ: ' + bTitle : '') + '\nসংরক্ষণ করলে ডেটাবেস থেকে স্থায়ীভাবে মুছে যাবে।')) { return; }
+            syncDaily();
+            state.daily.briefings.splice(bi, 1);
+            renderDaily();
+            showMsg($('msg-daily'), 'ব্রিফিংটি তালিকা থেকে সরানো হয়েছে — স্থায়ীভাবে মুছতে সংরক্ষণ করুন।', 'info');
+            return;
+        }
+        if (btn.hasAttribute('data-add-top5')) {
+            var tbi = parseInt(btn.getAttribute('data-add-top5'), 10);
+            syncDaily();
+            if (state.daily.briefings[tbi].top5.length >= 5) {
+                showMsg($('msg-daily'), 'বিশেষ আপডেট সর্বোচ্চ ৫টি হতে পারে।', 'err');
+                return;
+            }
+            state.daily.briefings[tbi].top5.push(blankTop5());
+            renderDaily(tbi);
+            return;
+        }
+        if (btn.hasAttribute('data-delete-top5')) {
+            var tp = btn.getAttribute('data-delete-top5').split(':');
+            syncDaily();
+            state.daily.briefings[parseInt(tp[0], 10)].top5.splice(parseInt(tp[1], 10), 1);
+            renderDaily(parseInt(tp[0], 10));
+            return;
+        }
+        if (btn.hasAttribute('data-add-upcoming')) {
+            var ubi = parseInt(btn.getAttribute('data-add-upcoming'), 10);
+            syncDaily();
+            state.daily.briefings[ubi].upcoming.push(blankUpcoming());
+            renderDaily(ubi);
+            return;
+        }
+        if (btn.hasAttribute('data-delete-upcoming')) {
+            var up = btn.getAttribute('data-delete-upcoming').split(':');
+            syncDaily();
+            state.daily.briefings[parseInt(up[0], 10)].upcoming.splice(parseInt(up[1], 10), 1);
+            renderDaily(parseInt(up[0], 10));
+            return;
+        }
+    });
+
+    /* ---------- Change password ---------- */
+    $('password-form').addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var msgEl = $('msg-password');
+        clearMsg(msgEl);
+        var user = auth.currentUser;
+        if (!user) {
+            showMsg(msgEl, 'আগে লগইন করুন।', 'err');
+            return;
+        }
+        var current = $('pw-current').value;
+        var next = $('pw-new').value;
+        var confirmPw = $('pw-confirm').value;
+        if (!current || !next || !confirmPw) {
+            showMsg(msgEl, 'তিনটি ঘরই পূরণ করুন।', 'err');
+            return;
+        }
+        if (next.length < 6) {
+            showMsg(msgEl, 'নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।', 'err');
+            return;
+        }
+        if (next !== confirmPw) {
+            showMsg(msgEl, 'নতুন পাসওয়ার্ড দুইবার একই হয়নি। আবার লিখুন।', 'err');
+            return;
+        }
+        var btn = $('pw-submit');
+        btn.disabled = true;
+        btn.textContent = 'পরিবর্তন হচ্ছে…';
+        var credential = firebase.auth.EmailAuthProvider.credential(user.email, current);
+        user.reauthenticateWithCredential(credential).then(function () {
+            return user.updatePassword(next);
+        }).then(function () {
+            $('password-form').reset();
+            showMsg(msgEl, 'পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে। পরের বার নতুন পাসওয়ার্ড দিয়ে লগইন করুন।', 'ok');
+        }).catch(function (err) {
+            if (err && err.code === 'auth/wrong-password') {
+                showMsg(msgEl, 'বর্তমান পাসওয়ার্ড ভুল হয়েছে।', 'err');
+            } else {
+                showMsg(msgEl, 'পাসওয়ার্ড পরিবর্তন হয়নি: ' + authErrorMessage(err), 'err');
+            }
+        }).finally(function () {
+            btn.disabled = false;
+            btn.textContent = 'পাসওয়ার্ড পরিবর্তন করুন';
+        });
+    });
+
+    /* ---------- Auth state: show login only, or the editors ---------- */
+    auth.onAuthStateChanged(function (user) {
+        if (user) {
+            loginView.hidden = true;
+            adminView.hidden = false;
+            $('admin-email').textContent = user.email || '';
+            clearMsg(loginError);
+            $('login-form').reset();
+            if (!dataLoaded) { loadAll(); }
+        } else {
+            adminView.hidden = true;
+            loginView.hidden = false;
+            dataLoaded = false;
+            state = {};
+            clearMsg(globalMsg);
+        }
+    });
+})();
+</script>
+</body>
+</html>

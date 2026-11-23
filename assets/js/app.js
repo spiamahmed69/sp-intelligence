@@ -7,9 +7,11 @@
  *    from data/*.json, exactly as on the PHP site.
  *  - Language: ?lang=bn|en wins, then localStorage, then Bengali default.
  *  - Renders news cards, daily briefing cards, freshness strips, "next
- *    update" times and empty states from data/*.json, mirroring
- *    includes/cards and includes/functions exactly (same markup,
- *    same Bengali date format, same freshness wording).
+ *    update" times and empty states from Firebase Realtime Database
+ *    (public read on /news), mirroring includes/cards and
+ *    includes/functions exactly (same markup, same Bengali date format,
+ *    same freshness wording). Local data/*.json files are kept as
+ *    backup only — the live site never fetches them.
  *  - All times are Asia/Dhaka (UTC+6).
  */
 (function () {
@@ -449,16 +451,21 @@
 
     // ------------------------------------------------------------------
     // Data loading (mirrors load_feed() / load_daily() in functions).
+    // Live source is Firebase Realtime Database, public read on /news:
+    //   <databaseURL>/news/10h.json, /news/4h.json, /news/2h.json,
+    //   /news/daily.json  (REST endpoints, no auth needed for reading)
     // ------------------------------------------------------------------
-    function loadJSON(path) {
-        return fetch(path, { cache: 'no-cache' }).then(function (res) {
-            if (!res.ok) { throw new Error('HTTP ' + res.status + ' for ' + path); }
+    var FB_BASE = 'https://sp-intelligence-fbbf9-default-rtdb.asia-southeast1.firebasedatabase.app/news';
+
+    function loadJSON(url) {
+        return fetch(url, { cache: 'no-cache' }).then(function (res) {
+            if (!res.ok) { throw new Error('HTTP ' + res.status + ' for ' + url); }
             return res.json();
         });
     }
 
     function loadFeed(file) {
-        return loadJSON('data/' + file).then(function (data) {
+        return loadJSON(FB_BASE + '/' + file).then(function (data) {
             var meta = (data && data.meta) || {};
             var entries = Array.isArray(data.entries) ? data.entries.slice() : [];
             entries.sort(function (a, b) {
@@ -472,7 +479,7 @@
     }
 
     function loadDaily() {
-        return loadJSON('data/daily.json').then(function (data) {
+        return loadJSON(FB_BASE + '/daily.json').then(function (data) {
             var meta = (data && data.meta) || {};
             var briefings = Array.isArray(data.briefings) ? data.briefings.slice() : [];
             briefings.sort(function (a, b) {
@@ -548,7 +555,7 @@
 
     // ------------------------------------------------------------------
     // Homepage chart + activity feed + simple sector lists.
-    // All numbers come from the real data/*.json files — nothing invented.
+    // All numbers come from the real Firebase data — nothing invented.
     // ------------------------------------------------------------------
 
     // Story counts per section, straight from the loaded feeds.
