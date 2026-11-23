@@ -28,6 +28,7 @@
             menu: 'মেনু',
             section_10h: '১০ ঘণ্টার আপডেট',
             section_4h: '৪ ঘণ্টার আপডেট',
+            section_2h: '২ ঘণ্টার আপডেট',
             section_daily: 'দৈনিক ব্রিফিং',
             archive: 'আর্কাইভ',
             language: 'ভাষা',
@@ -35,6 +36,16 @@
             hero_title: 'বাংলাদেশ ও বিশ্বের গুরুত্বপূর্ণ খবর, সময়মতো।',
             hero_title_gradient: 'যাচাই করা খবর, সহজ বাংলায়।',
             hero_subtitle: 'প্রতি ১০ ঘণ্টা ও প্রতি ৪ ঘণ্টায় নতুন আপডেট, আর প্রতিদিন সকাল ১০টায় দৈনিক ব্রিফিং। প্রতিটি খবরের সঙ্গে তার সূত্র দেওয়া থাকে — কোনো বানানো খবর নয়, কোনো গুজব নয়।',
+            dash_kicker: 'সকালের ড্যাশবোর্ড',
+            dash_title: 'একনজরে আজকের সব খবর',
+            dash_subtitle: 'প্রতি ২, ৪ ও ১০ ঘণ্টায় নতুন আপডেট, আর প্রতিদিন সকাল ১০টায় দৈনিক ব্রিফিং। প্রতিটি খবরের সঙ্গে তার সূত্র দেওয়া থাকে — কোনো বানানো খবর নয়, কোনো গুজব নয়।',
+            stat_top5: 'টি বিশেষ আপডেট',
+            widget_weather: 'আবহাওয়া',
+            widget_markets: 'ডলার ও বাজার',
+            widget_soon: 'শীঘ্রই আসছে',
+            widget_weather_text: 'ঢাকার আবহাওয়া ও তাপমাত্রা এখানে দেখা যাবে।',
+            widget_markets_text: 'ডলারের হার ও বাজারের তথ্য এখানে দেখা যাবে।',
+            hijri_approx: 'আনুমানিক',
             last_updated: 'সর্বশেষ আপডেট',
             next_update: 'পরের আপডেট',
             next_briefing: 'পরের ব্রিফিং',
@@ -57,9 +68,6 @@
             how_3_text: 'যাচাই করা তথ্য JSON ফাইলে বসিয়ে সাইটে আপডেট করা হয়।',
             honesty_title: 'আমাদের প্রতিশ্রুতি',
             honesty_text: 'এই সাইটে কোনো বানানো খবর, ভুয়া তথ্য বা গুজব প্রকাশ করা হয় না। কোনো বিষয়ে নতুন তথ্য না থাকলে সেটি স্পষ্টভাবে জানানো হয়। প্রতিটি গুরুত্বপূর্ণ খবরের সঙ্গে প্রকাশের তারিখ ও মূল সূত্রের লিংক থাকে।',
-            placeholder_title: 'চতুর্থ সেকশন — শীঘ্রই আসছে',
-            placeholder_text: 'এই জায়গাটি চতুর্থ সেকশনের জন্য রাখা হয়েছে। এই সেকশনে কী থাকবে, তা জানালে এখানে যোগ করা হবে।',
-            placeholder_tag: 'সংরক্ষিত জায়গা',
             no_entries: 'এই মুহূর্তে এই সেকশনে কোনো নতুন তথ্য নেই। পরের আপডেটের সময় আবার দেখুন।',
             no_briefings: 'এখনো কোনো দৈনিক ব্রিফিং প্রকাশ হয়নি। প্রথম ব্রিফিং সকাল ১০টায় আসবে।',
             back_to_top: 'উপরে যান',
@@ -73,9 +81,11 @@
             // Inline strings from the PHP pages (the PHP pages)
             section_10h_intro: 'গত ১০ ঘণ্টার গুরুত্বপূর্ণ খবর — প্রতিটি খবরের সঙ্গে তার সূত্র ও প্রকাশের সময় দেওয়া আছে।',
             section_4h_intro: 'দ্রুত আপডেট — গত ৪ ঘণ্টার সংক্ষিপ্ত খবর।',
+            section_2h_intro: 'সবচেয়ে দ্রুত আপডেট — গত ২ ঘণ্টার সংক্ষিপ্ত খবর।',
             section_daily_intro: 'প্রতিদিন সকাল ১০টায় — দিনের সবচেয়ে গুরুত্বপূর্ণ ৫টি খবর, সারসংক্ষেপ ও সামনের তারিখ।',
             page_10h_intro: 'প্রতি ১০ ঘণ্টা পর এই সেকশন নতুন তথ্য দিয়ে আপডেট হয়। প্রতিটি খবরে শুধু তার আগের ১০ ঘণ্টার তথ্য থাকে।',
             page_4h_intro: 'প্রতি ৪ ঘণ্টা পর এই সেকশন নতুন তথ্য দিয়ে আপডেট হয়। সংক্ষিপ্ত খবর — প্রতিটি খবরে শুধু তার আগের ৪ ঘণ্টার তথ্য থাকে।',
+            page_2h_intro: 'প্রতি ২ ঘণ্টা পর এই সেকশন নতুন তথ্য দিয়ে আপডেট হয়। সংক্ষিপ্ত খবর — প্রতিটি খবরে শুধু তার আগের ২ ঘণ্টার তথ্য থাকে।',
             page_daily_intro: 'প্রতিদিন সকাল ১০টায় প্রকাশিত ব্রিফিং — দিনের সবচেয়ে গুরুত্বপূর্ণ ৫টি খবর, সারসংক্ষেপ, সামনের গুরুত্বপূর্ণ তারিখ ও একটি ইসলামিক জ্ঞান।',
             page_archive_intro: 'আগের সব আপডেট এখানে তারিখ অনুযায়ী সাজানো আছে। নতুন আপডেট এলে পুরোনো তথ্য এখানেই থেকে যায়।',
             earlier_briefings: 'আগের ব্রিফিং',
@@ -83,6 +93,7 @@
             page_desc_home: 'বাংলাদেশ ও বিশ্বের খবর — যাচাই করা, সময়মতো, সহজ বাংলায়',
             page_desc_10h: 'গত ১০ ঘণ্টার গুরুত্বপূর্ণ খবর — যাচাই করা, সূত্রসহ।',
             page_desc_4h: 'গত ৪ ঘণ্টার সংক্ষিপ্ত খবর — দ্রুত আপডেট।',
+            page_desc_2h: 'গত ২ ঘণ্টার সংক্ষিপ্ত খবর — সবচেয়ে দ্রুত আপডেট।',
             page_desc_daily: 'প্রতিদিন সকাল ১০টায় দৈনিক ব্রিফিং — বিশেষ ৫টি খবর, সারসংক্ষেপ ও সামনের তারিখ।',
             page_desc_archive: 'আগের সব আপডেট ও ব্রিফিং — তারিখ অনুযায়ী সাজানো।'
         },
@@ -94,6 +105,7 @@
             menu: 'Menu',
             section_10h: '10-hour updates',
             section_4h: '4-hour updates',
+            section_2h: '2-hour updates',
             section_daily: 'Daily briefing',
             archive: 'Archive',
             language: 'Language',
@@ -101,6 +113,16 @@
             hero_title: 'Important news from Bangladesh and the world, on time.',
             hero_title_gradient: 'Verified news, in simple Bengali.',
             hero_subtitle: 'New updates every 10 hours and every 4 hours, plus a daily briefing at 10am. Every story carries its source — no invented news, no rumours.',
+            dash_kicker: 'Morning dashboard',
+            dash_title: 'Everything today, at a glance',
+            dash_subtitle: 'New updates every 2, 4 and 10 hours, plus a daily briefing at 10am. Every story carries its source — no invented news, no rumours.',
+            stat_top5: 'top updates',
+            widget_weather: 'Weather',
+            widget_markets: 'Dollar & markets',
+            widget_soon: 'Coming soon',
+            widget_weather_text: 'Dhaka weather and temperature will appear here.',
+            widget_markets_text: 'Dollar rate and market information will appear here.',
+            hijri_approx: 'approx.',
             last_updated: 'Last updated',
             next_update: 'Next update',
             next_briefing: 'Next briefing',
@@ -123,9 +145,6 @@
             how_3_text: 'Verified information is placed in a JSON file and the site is updated.',
             honesty_title: 'Our promise',
             honesty_text: 'No invented news, false information or rumours are published here. When there is no new information on a topic, that is stated clearly. Every important story carries its publication date and a link to the original source.',
-            placeholder_title: 'Fourth section — coming soon',
-            placeholder_text: 'This space is reserved for a fourth section. Tell us what should go here and it will be added.',
-            placeholder_tag: 'Reserved slot',
             no_entries: 'There is no new information in this section right now. Please check again at the next update.',
             no_briefings: 'No daily briefing has been published yet. The first briefing arrives at 10am.',
             back_to_top: 'Back to top',
@@ -138,9 +157,11 @@
             dhaka_time: 'Dhaka time',
             section_10h_intro: 'The important news of the last 10 hours — every story with its source and publication time.',
             section_4h_intro: 'Fast updates — short news from the last 4 hours.',
+            section_2h_intro: 'Fastest updates — short news from the last 2 hours.',
             section_daily_intro: 'Every day at 10am — the 5 most important stories, a summary and upcoming dates.',
             page_10h_intro: 'This section is updated with new information every 10 hours. Each story covers only the previous 10 hours.',
             page_4h_intro: 'This section is updated with new information every 4 hours. Short stories — each covers only the previous 4 hours.',
+            page_2h_intro: 'This section is updated with new information every 2 hours. Short stories — each covers only the previous 2 hours.',
             page_daily_intro: 'Briefing published every day at 10am — the 5 most important stories, a summary, upcoming dates and one piece of Islamic knowledge.',
             page_archive_intro: 'All earlier updates are grouped here by date. When a new update arrives, the older information stays here.',
             earlier_briefings: 'Earlier briefings',
@@ -148,6 +169,7 @@
             page_desc_home: 'Bangladesh & world news — verified, on time, in simple Bengali',
             page_desc_10h: 'Important news of the last 10 hours — verified, with sources.',
             page_desc_4h: 'Short news from the last 4 hours — fast updates.',
+            page_desc_2h: 'Short news from the last 2 hours — the fastest updates.',
             page_desc_daily: 'Daily briefing every day at 10am — top 5 stories, summary and upcoming dates.',
             page_desc_archive: 'All earlier updates and briefings — grouped by date.'
         }
@@ -158,6 +180,7 @@
         home:    { titleKey: 'home',          descKey: 'page_desc_home' },
         '10h':   { titleKey: 'section_10h',   descKey: 'page_desc_10h' },
         '4h':    { titleKey: 'section_4h',    descKey: 'page_desc_4h' },
+        '2h':    { titleKey: 'section_2h',    descKey: 'page_desc_2h' },
         daily:   { titleKey: 'section_daily', descKey: 'page_desc_daily' },
         archive: { titleKey: 'archive',       descKey: 'page_desc_archive' }
     };
@@ -476,22 +499,125 @@
     }
 
     // ------------------------------------------------------------------
+    // Dashboard helpers — stat cards, date line, rail panels.
+    // ------------------------------------------------------------------
+    var ICON_BOLT = '<svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>';
+    var ICON_CLOCK_BIG = '<svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.6 4.2 2.5-.8 1.3L11 13.5V7h2z"/></svg>';
+    var ICON_STOPWATCH = '<svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 4a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7zm1-3h-2v2h2zm4.2 1.6-1.4 1.4 1.4 1.4 1.4-1.4zM11 7h2v6l4.2 2.5-.9 1.5L11 14z"/></svg>';
+    var ICON_CAL_BIG = '<svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm12 8v10H5V10z"/></svg>';
+
+    // One gradient stat card per sector: big count + last / next update.
+    // count + unit are passed in so the daily card can count top-5 items.
+    function statCard(opts) {
+        var html = '<a class="stat-card ' + esc(opts.tone) + '" href="' + esc(opts.href) + '">';
+        html += '<span class="stat-icon" aria-hidden="true">' + opts.icon + '</span>';
+        html += '<span class="stat-label">' + esc(opts.label) + '</span>';
+        html += '<span class="stat-num">' + esc(bnDigits(opts.count)) + ' <span class="stat-unit">' + esc(opts.unit) + '</span></span>';
+        html += '<span class="stat-meta">' + esc(t('last_updated')) + ': ' +
+            (opts.last ? esc(bnDatetime(opts.last)) + ' (' + esc(freshness(opts.last)) + ')' : '—') + '</span>';
+        if (opts.next) {
+            html += '<span class="stat-meta">' + esc(t('next_update')) + ': ' + esc(opts.next) + '</span>';
+        }
+        html += '</a>';
+        return html;
+    }
+
+    // "সোমবার, ২৩ নভেম্বর ২০২৬ · হিজরি ১১ জমাদিউস সানি ১৪৪৮ (আনুমানিক)"
+    function dashDateText() {
+        var now = new Date();
+        var bangla = '';
+        try {
+            bangla = new Intl.DateTimeFormat('bn-BD', {
+                timeZone: 'Asia/Dhaka', weekday: 'long', day: 'numeric',
+                month: 'long', year: 'numeric'
+            }).format(now);
+        } catch (e) { bangla = ''; }
+        var hijri = '';
+        try {
+            hijri = new Intl.DateTimeFormat('bn-BD-u-ca-islamic', {
+                timeZone: 'Asia/Dhaka', day: 'numeric', month: 'long', year: 'numeric'
+            }).format(now);
+            // Drop the trailing era word ("যুগ") the Bengali locale appends.
+            hijri = hijri.replace(/ যুগ$/, '');
+        } catch (e) { hijri = ''; }
+        var out = bangla;
+        if (hijri) { out += ' · ' + hijri + ' (' + t('hijri_approx') + ')'; }
+        return out || bnDate(new Date().toISOString().slice(0, 10));
+    }
+
+    function renderDashDate() {
+        var el = document.getElementById('dash-date');
+        if (el) { el.textContent = dashDateText(); }
+    }
+
+    // Rail: compact top-5 list + compact upcoming-dates list.
+    function renderRail(latest) {
+        var top5El = document.getElementById('rail-top5');
+        var upEl = document.getElementById('rail-upcoming');
+        if (!latest) {
+            if (top5El) { top5El.innerHTML = '<h3>' + esc(t('top_5')) + '</h3>' + emptyState('no_briefings'); }
+            if (upEl) { upEl.innerHTML = '<h3>' + esc(t('upcoming_dates')) + '</h3>' + emptyState('no_briefings'); }
+            return;
+        }
+        if (top5El) {
+            var top5 = Array.isArray(latest.top5) ? latest.top5 : [];
+            top5El.innerHTML = '<h3>' + esc(t('top_5')) + '</h3>' +
+                (top5.length
+                    ? '<ol class="compact-list">' + top5.map(function (item) {
+                        return '<li><a href="daily.html">' + esc(item.title || '') + '</a></li>';
+                    }).join('') + '</ol>'
+                    : emptyState('no_briefings'));
+        }
+        if (upEl) {
+            var upcoming = Array.isArray(latest.upcoming) ? latest.upcoming : [];
+            upEl.innerHTML = '<h3>' + esc(t('upcoming_dates')) + '</h3>' +
+                (upcoming.length
+                    ? '<ul class="compact-list">' + upcoming.map(function (u) {
+                        return '<li>' + (u.date ? '<strong>' + esc(bnDate(u.date)) + ':</strong> ' : '') +
+                            esc(u.text || '') + '</li>';
+                    }).join('') + '</ul>'
+                    : emptyState('no_briefings'));
+        }
+    }
+
+    // ------------------------------------------------------------------
     // Page drivers.
     // ------------------------------------------------------------------
     function renderHome() {
-        Promise.all([loadFeed('10h.json'), loadFeed('4h.json'), loadDaily()]).then(function (res) {
-            var feed10 = res[0], feed4 = res[1], daily = res[2];
+        renderDashDate();
+        Promise.all([loadFeed('10h.json'), loadFeed('4h.json'), loadFeed('2h.json'), loadDaily()]).then(function (res) {
+            var feed10 = res[0], feed4 = res[1], feed2 = res[2], daily = res[3];
+            var latest = daily.briefings[0] || null;
+            // Stat cards — one per sector, newest count + last/next update.
+            setHTML('stat-grid', [
+                statCard({ tone: 'stat-blue', href: '10-ghonta.html', icon: ICON_CLOCK_BIG,
+                    label: t('section_10h'), count: feed10.entries.length, unit: t('entries_count'),
+                    last: feed10.meta.last_updated || '', next: nextUpdate(feed10.meta) }),
+                statCard({ tone: 'stat-orange', href: '4-ghonta.html', icon: ICON_BOLT,
+                    label: t('section_4h'), count: feed4.entries.length, unit: t('entries_count'),
+                    last: feed4.meta.last_updated || '', next: nextUpdate(feed4.meta) }),
+                statCard({ tone: 'stat-violet', href: '2-ghonta.html', icon: ICON_STOPWATCH,
+                    label: t('section_2h'), count: feed2.entries.length, unit: t('entries_count'),
+                    last: feed2.meta.last_updated || '', next: nextUpdate(feed2.meta) }),
+                statCard({ tone: 'stat-green', href: 'daily.html', icon: ICON_CAL_BIG,
+                    label: t('section_daily'), count: latest ? (latest.top5 || []).length : 0, unit: t('stat_top5'),
+                    last: latest ? (latest.published_at || '') : '', next: nextDaily() })
+            ].join(''));
             setHTML('strip-10h', freshnessStrip(feed10.meta, 'next_update'));
             setHTML('grid-10h', feed10.entries.length
-                ? '<div class="news-grid">' + feed10.entries.slice(0, 5).map(entryCard).join('') + '</div>'
+                ? '<div class="news-grid">' + feed10.entries.slice(0, 3).map(entryCard).join('') + '</div>'
                 : emptyState('no_entries'));
             setHTML('strip-4h', freshnessStrip(feed4.meta, 'next_update'));
             setHTML('grid-4h', feed4.entries.length
-                ? '<div class="news-grid">' + feed4.entries.slice(0, 5).map(entryCard).join('') + '</div>'
+                ? '<div class="news-grid">' + feed4.entries.slice(0, 3).map(entryCard).join('') + '</div>'
                 : emptyState('no_entries'));
-            var latest = daily.briefings[0] || null;
+            setHTML('strip-2h', freshnessStrip(feed2.meta, 'next_update'));
+            setHTML('grid-2h', feed2.entries.length
+                ? '<div class="news-grid">' + feed2.entries.slice(0, 3).map(entryCard).join('') + '</div>'
+                : emptyState('no_entries'));
             setHTML('strip-daily', dailyStrip(latest));
             setHTML('briefing-daily', latest ? dailyCard(latest, false) : emptyState('no_briefings'));
+            renderRail(latest);
         });
     }
 
@@ -529,7 +655,7 @@
         var section = '10h';
         try {
             var s = new URLSearchParams(window.location.search).get('section');
-            if (s === '4h' || s === 'daily') { section = s; }
+            if (s === '4h' || s === '2h' || s === 'daily') { section = s; }
         } catch (e) { /* default 10h */ }
         document.querySelectorAll('[data-archive-tab]').forEach(function (tab) {
             if (tab.getAttribute('data-archive-tab') === section) {
@@ -556,7 +682,8 @@
                 }).join('');
             });
         } else {
-            loadFeed(section === '4h' ? '4h.json' : '10h.json').then(function (feed) {
+            var feedFiles = { '10h': '10h.json', '4h': '4h.json', '2h': '2h.json' };
+            loadFeed(feedFiles[section] || '10h.json').then(function (feed) {
                 if (!feed.entries.length) { mount.innerHTML = emptyState('no_entries'); return; }
                 var grouped = {};
                 feed.entries.forEach(function (e) {
@@ -581,6 +708,7 @@
     if (page === 'home') { renderHome(); }
     else if (page === '10h') { renderFeedPage('10h.json', '10h'); }
     else if (page === '4h') { renderFeedPage('4h.json', '4h'); }
+    else if (page === '2h') { renderFeedPage('2h.json', '2h'); }
     else if (page === 'daily') { renderDailyPage(); }
     else if (page === 'archive') { renderArchive(); }
 
@@ -589,6 +717,7 @@
         t: t, bnDatetime: bnDatetime, bnDate: bnDate, freshness: freshness,
         nextUpdate: nextUpdate, nextDaily: nextDaily,
         entryCard: entryCard, dailyCard: dailyCard,
-        freshnessStrip: freshnessStrip, dailyStrip: dailyStrip
+        freshnessStrip: freshnessStrip, dailyStrip: dailyStrip,
+        statCard: statCard, dashDateText: dashDateText
     };
 })();
